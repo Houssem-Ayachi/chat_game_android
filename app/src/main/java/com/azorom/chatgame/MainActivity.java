@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //        signupUser();
-        verifyUser();
+//        verifyUser();
 //        loginUser();
     }
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         //response is a dynamic object based on the request being sent
         Auth.AuthRequestResponse<Auth.AuthResponse> resp;
         try {
-            resp = authHandler.login(loginObj).get();
+            resp = (Auth.AuthRequestResponse<Auth.AuthResponse>)authHandler.login(loginObj).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -57,10 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 "mido.ayachi@gmail.com",
                 "ilovepizzza"
         );
-
         Auth.AuthRequestResponse<Auth.AuthResponse> resp;
         try {
-            resp = this.authHandler.signUp(signUpOBJ).get();
+            resp = (Auth.AuthRequestResponse<Auth.AuthResponse>)this.authHandler.signUp(signUpOBJ).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         );
         Auth.AuthRequestResponse<Auth.VerificationCodeResponse> resp;
         try {
-            resp = this.authHandler.verifyUser(codeObj).get();
+            resp = (Auth.AuthRequestResponse<Auth.VerificationCodeResponse>)this.authHandler.verifyUser(codeObj).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

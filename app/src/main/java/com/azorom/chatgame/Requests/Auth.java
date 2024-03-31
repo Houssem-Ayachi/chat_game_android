@@ -1,25 +1,10 @@
 package com.azorom.chatgame.Requests;
 
-import android.util.Log;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class Auth {
 
@@ -90,186 +75,36 @@ public class Auth {
         }
     }
 
-    OkHttpClient _client;
-
     private final ExecutorService _executor;
 
     public Auth(){
-        _client = new OkHttpClient();
         _executor = Executors.newSingleThreadExecutor();
     }
 
-    private AuthRequestResponse<AuthResponse> sendLogin(LoginOBJ login) {
-        URL url;
-        try {
-            url = new URL(RequestsConstants.serverHost + "/api/auth/login");
-        } catch (MalformedURLException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        ObjectMapper objMapper = new ObjectMapper();
-        String loginJSON = "";
-        try {
-            loginJSON = objMapper.writeValueAsString(login);
-        } catch (JsonProcessingException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        MediaType contentType = MediaType.get("application/json");
-        RequestBody reqBody = RequestBody.create(loginJSON, contentType);
-        Request req = new Request.Builder()
-                .url(url)
-                .post(reqBody)
-                .build();
-        String resJSON = "";
-        ResponseBody respBody = null;
-        try {
-            Response resp = _client.newCall(req).execute();
-            respBody = resp.body();
-        } catch (IOException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        try {
-            if (respBody != null) {
-                resJSON = respBody.string();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        AuthResponse loginResp = null;
-        RequestError error = null;
-        try {
-            loginResp = objMapper.readValue(resJSON, AuthResponse.class);
-        } catch (UnrecognizedPropertyException e){
-            try {
-                error = objMapper.readValue(resJSON, RequestError.class);
-            } catch (JsonProcessingException ex) {
-                throw new RuntimeException(ex);
-            }
-        } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-        }
-        return new AuthRequestResponse<>(loginResp, error);
+    public Future<Object> signUp(SignUpOBJ signUpOBJ){
+        return _executor.submit(() -> RequestsConstants.postRequest(
+                RequestsConstants.serverHost + "/api/auth/signup",
+                signUpOBJ,
+                AuthResponse.class
+                )
+        );
     }
 
-    private AuthRequestResponse<AuthResponse> sendSignup(SignUpOBJ signup){
-        URL url;
-        try {
-            url = new URL(RequestsConstants.serverHost + "/api/auth/signup");
-        } catch (MalformedURLException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        ObjectMapper objMapper = new ObjectMapper();
-        String loginJSON = "";
-        try {
-            loginJSON = objMapper.writeValueAsString(signup);
-        } catch (JsonProcessingException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        MediaType contentType = MediaType.get("application/json");
-        RequestBody reqBody = RequestBody.create(loginJSON, contentType);
-        Request req = new Request.Builder()
-                .url(url)
-                .post(reqBody)
-                .build();
-        String resJSON = "";
-        ResponseBody respBody = null;
-        try {
-            Response resp = _client.newCall(req).execute();
-            respBody = resp.body();
-        } catch (IOException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        try {
-            if (respBody != null) {
-                resJSON = respBody.string();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        AuthResponse signupResp = null;
-        RequestError error = null;
-        try {
-            signupResp = objMapper.readValue(resJSON, AuthResponse.class);
-        } catch (UnrecognizedPropertyException e){
-            try {
-                error = objMapper.readValue(resJSON, RequestError.class);
-            } catch (JsonProcessingException ex) {
-                throw new RuntimeException(ex);
-            }
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return new AuthRequestResponse<>(signupResp, error);
+    public Future<Object> login(LoginOBJ loginObj){
+        return _executor.submit(() -> RequestsConstants.postRequest(
+                RequestsConstants.serverHost + "/api/auth/login",
+                loginObj,
+                AuthResponse.class
+                )
+        );
     }
 
-    private AuthRequestResponse<VerificationCodeResponse> sendVerificationCode(VerificationCodeOBJ codeObj){
-        URL url;
-        try {
-            url = new URL(RequestsConstants.serverHost + "/api/auth/verify");
-        } catch (MalformedURLException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        ObjectMapper objMapper = new ObjectMapper();
-        String loginJSON = "";
-        try {
-            loginJSON = objMapper.writeValueAsString(codeObj);
-        } catch (JsonProcessingException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        MediaType contentType = MediaType.get("application/json");
-        RequestBody reqBody = RequestBody.create(loginJSON, contentType);
-        Request req = new Request.Builder()
-                .url(url)
-                .post(reqBody)
-                .build();
-        String resJSON = "";
-        ResponseBody respBody = null;
-        try {
-            Response resp = _client.newCall(req).execute();
-            respBody = resp.body();
-        } catch (IOException e) {
-            Log.d("REQUESTS", e.toString());
-            return null;
-        }
-        try {
-            if (respBody != null) {
-                resJSON = respBody.string();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        VerificationCodeResponse signupResp = null;
-        RequestError error = null;
-        try {
-            signupResp = objMapper.readValue(resJSON, VerificationCodeResponse.class);
-        } catch (UnrecognizedPropertyException e){
-            try {
-                error = objMapper.readValue(resJSON, RequestError.class);
-            } catch (JsonProcessingException ex) {
-                throw new RuntimeException(ex);
-            }
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return new AuthRequestResponse<>(signupResp, error);
-    }
-
-    public Future<AuthRequestResponse<AuthResponse>> signUp(SignUpOBJ signUpOBJ){
-        return _executor.submit(() -> this.sendSignup(signUpOBJ));
-    }
-
-    public Future<AuthRequestResponse<AuthResponse>> login(LoginOBJ loginObj){
-        return _executor.submit(() -> this.sendLogin(loginObj));
-    }
-
-    public Future<AuthRequestResponse<VerificationCodeResponse>> verifyUser(VerificationCodeOBJ codeOBJ){
-        return _executor.submit(() -> this.sendVerificationCode(codeOBJ));
+    public Future<Object> verifyUser(VerificationCodeOBJ codeOBJ){
+        return _executor.submit(() -> RequestsConstants.postRequest(
+                RequestsConstants.serverHost + "/api/auth/verify",
+                codeOBJ,
+                VerificationCodeResponse.class
+                )
+        );
     }
 }
