@@ -51,30 +51,6 @@ public class Auth {
         }
     }
 
-    public static class RequestError{
-        public String message;
-        public String error;
-        public int statusCode;
-        public RequestError(
-                @JsonProperty("message") String message,
-                @JsonProperty("error") String error,
-                @JsonProperty("statusCode") int statusCode
-        ){
-            this.message = message;
-            this.error = error;
-            this.statusCode = statusCode;
-        }
-    }
-
-    public static class AuthRequestResponse<ResponseType> {
-        public ResponseType response;
-        public RequestError error;
-        public AuthRequestResponse(ResponseType response, RequestError error){
-            this.response = response;
-            this.error = error;
-        }
-    }
-
     private final ExecutorService _executor;
 
     public Auth(){

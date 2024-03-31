@@ -6,15 +6,19 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.azorom.chatgame.Requests.Auth;
+import com.azorom.chatgame.Requests.RequestsConstants;
+import com.azorom.chatgame.Requests.UserRequest;
 
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     Auth authHandler;
+    UserRequest userReqHandler;
 
     public MainActivity(){
         authHandler = new Auth();
+        userReqHandler = new UserRequest();
     }
 
     @Override
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 //        signupUser();
 //        verifyUser();
 //        loginUser();
+        updateCharacter();
     }
 
     private void loginUser(){
@@ -35,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         //and a Respone object property called response (exists if it isn't null)
         //response should contain the necessary data acknowledgment data
         //response is a dynamic object based on the request being sent
-        Auth.AuthRequestResponse<Auth.AuthResponse> resp;
+        RequestsConstants.RequestResponse<Auth.AuthResponse> resp;
         try {
-            resp = (Auth.AuthRequestResponse<Auth.AuthResponse>)authHandler.login(loginObj).get();
+            resp = (RequestsConstants.RequestResponse<Auth.AuthResponse>)authHandler.login(loginObj).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -57,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 "mido.ayachi@gmail.com",
                 "ilovepizzza"
         );
-        Auth.AuthRequestResponse<Auth.AuthResponse> resp;
+        RequestsConstants.RequestResponse<Auth.AuthResponse> resp;
         try {
-            resp = (Auth.AuthRequestResponse<Auth.AuthResponse>)this.authHandler.signUp(signUpOBJ).get();
+            resp = (RequestsConstants.RequestResponse<Auth.AuthResponse>)this.authHandler.signUp(signUpOBJ).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -78,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
                 941,
                 "mido.ayachi@gmail.com"
         );
-        Auth.AuthRequestResponse<Auth.VerificationCodeResponse> resp;
+        RequestsConstants.RequestResponse<Auth.VerificationCodeResponse> resp;
         try {
-            resp = (Auth.AuthRequestResponse<Auth.VerificationCodeResponse>)this.authHandler.verifyUser(codeObj).get();
+            resp = (RequestsConstants.RequestResponse<Auth.VerificationCodeResponse>)this.authHandler.verifyUser(codeObj).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -88,6 +93,28 @@ public class MainActivity extends AppCompatActivity {
             Log.d("REQUESTS", "error " + resp.error.message);
         }else if(resp.response != null){
             Log.d("REQUESTS", "message " + resp.response.response);
+        }else{
+            Log.d("REQUESTS", "null body");
+        }
+    }
+
+    private void updateCharacter(){
+        UserRequest.UpdateCharacterOBJ characterOBJ = new UserRequest.UpdateCharacterOBJ(
+                "6609660ddaf015cb8266e5ab",
+                "hat3",
+                "head1",
+                "body4"
+        );
+        RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse> resp;
+        try {
+            resp = (RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse>)userReqHandler.updateCharacter(characterOBJ).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(resp.error != null){
+            Log.d("REQUESTS", "error " + resp.error.message);
+        }else if(resp.response != null){
+            Log.d("REQUESTS", "response: " + resp.response.response);
         }else{
             Log.d("REQUESTS", "null body");
         }
