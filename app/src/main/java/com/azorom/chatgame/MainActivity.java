@@ -1,6 +1,11 @@
 package com.azorom.chatgame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.datastore.preferences.core.MutablePreferences;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.preferences.core.PreferencesKeys;
+import androidx.datastore.preferences.rxjava2.RxPreferenceDataStoreBuilder;
+import androidx.datastore.rxjava2.RxDataStore;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,17 +13,26 @@ import android.util.Log;
 import com.azorom.chatgame.Requests.Auth;
 import com.azorom.chatgame.Requests.RequestsConstants;
 import com.azorom.chatgame.Requests.UserRequest;
+import com.azorom.chatgame.Storage.Storage;
 
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
+
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public class MainActivity extends AppCompatActivity {
 
     Auth authHandler;
     UserRequest userReqHandler;
+    Storage storage;
 
     public MainActivity(){
         authHandler = new Auth();
         userReqHandler = new UserRequest();
+        storage = new Storage(this);
     }
 
     @Override
@@ -26,15 +40,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String key = storage.getKey();
+        Log.d("STORAGE", key);
 //        signupUser();
 //        verifyUser();
 //        loginUser();
-        updateCharacter();
+//        updateCharacter();
     }
 
     private void loginUser(){
         //TODO: (login / password) arguments should be dynamic (coming from user input)
-        Auth.LoginOBJ loginObj = new Auth.LoginOBJ("azorom", "ilovepizza");
+        Auth.LoginOBJ loginObj = new Auth.LoginOBJ("Azorom", "ilovepizza");
         //NOTE: this object contains two of possible replies from the server
         //an Error object property called error (exists if it isn't null)
         //and a Respone object property called response (exists if it isn't null)
@@ -50,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("REQUESTS", "error " + resp.error.message);
         }else if(resp.response != null){
             Log.d("REQUESTS", "ACCESS KEY: " + resp.response.access_key);
+            storage.saveKey(resp.response.access_key);
         }else{
             Log.d("REQUESTS", "null body");
         }
@@ -72,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("REQUESTS", "error " + resp.error.message);
         }else if(resp.response != null){
             Log.d("REQUESTS", "ACCESS KEY: " + resp.response.access_key);
+            storage.saveKey(resp.response.access_key);
         }else{
             Log.d("REQUESTS", "null body");
         }

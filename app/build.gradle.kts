@@ -34,7 +34,12 @@ android {
 dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-rxjava3:1.0.0")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
