@@ -15,6 +15,7 @@ import com.azorom.chatgame.Requests.RequestsConstants;
 import com.azorom.chatgame.Requests.UserRequest;
 import com.azorom.chatgame.Storage.Storage;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -40,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String key = storage.getKey();
-        Log.d("STORAGE", key);
+        editProfile();
+//        String key = storage.getKey();
 //        signupUser();
+//        Log.d("STORAGE", key);
 //        verifyUser();
 //        loginUser();
 //        updateCharacter();
@@ -126,6 +128,28 @@ public class MainActivity extends AppCompatActivity {
         RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse> resp;
         try {
             resp = (RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse>)userReqHandler.updateCharacter(characterOBJ).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(resp.error != null){
+            Log.d("REQUESTS", "error " + resp.error.message);
+        }else if(resp.response != null){
+            Log.d("REQUESTS", "response: " + resp.response.response);
+        }else{
+            Log.d("REQUESTS", "null body");
+        }
+    }
+
+    private void editProfile(){
+        UserRequest.EditProfileOBJ editObj = new UserRequest.EditProfileOBJ(
+                "661131c8842f34c88b432480",
+                "Azrorooom",
+                "a peaceful monk",
+                new String[]{"panda", "peaceful"}
+        );
+        RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse> resp;
+        try {
+            resp = (RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse>)userReqHandler.editProfile(editObj).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

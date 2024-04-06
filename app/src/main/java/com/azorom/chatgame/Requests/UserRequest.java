@@ -19,7 +19,18 @@ public class UserRequest {
             this.body = body;
         }
     }
-
+    public static class EditProfileOBJ{
+        public String id;
+        public String userName;
+        public String bio;
+        public String[] funFacts;
+        public EditProfileOBJ(String id, String userName, String bio, String[] funFacts){
+            this.id = id;
+            this.userName = userName;
+            this.bio = bio;
+            this.funFacts = funFacts;
+        }
+    }
     private final ExecutorService _executor;
 
     public UserRequest(){
@@ -30,6 +41,14 @@ public class UserRequest {
         return _executor.submit(() -> RequestsConstants.putRequest(
                 RequestsConstants.serverHost + "/api/user/character",
                 characterObj,
+                RequestsConstants.BasicRequestResponse.class
+        ));
+    }
+
+    public Future<Object> editProfile(EditProfileOBJ editObj){
+        return _executor.submit(() -> RequestsConstants.putRequest(
+                RequestsConstants.serverHost + "/api/user/profile",
+                editObj,
                 RequestsConstants.BasicRequestResponse.class
         ));
     }
