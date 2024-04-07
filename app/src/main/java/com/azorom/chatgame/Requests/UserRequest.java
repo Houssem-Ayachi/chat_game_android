@@ -1,5 +1,7 @@
 package com.azorom.chatgame.Requests;
 
+import android.content.Context;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -7,41 +9,38 @@ import java.util.concurrent.Future;
 public class UserRequest {
 
     public static class UpdateCharacterOBJ {
-        public String id;
         public String hat;
         public String head;
-        public String body;
 
-        public UpdateCharacterOBJ(String id, String hat, String head, String body){
-            this.id = id;
+        public UpdateCharacterOBJ(String hat, String head){
             this.hat = hat;
             this.head = head;
-            this.body = body;
         }
     }
     public static class EditProfileOBJ{
-        public String id;
         public String userName;
         public String bio;
         public String[] funFacts;
-        public EditProfileOBJ(String id, String userName, String bio, String[] funFacts){
-            this.id = id;
+        public EditProfileOBJ(String userName, String bio, String[] funFacts){
             this.userName = userName;
             this.bio = bio;
             this.funFacts = funFacts;
         }
     }
     private final ExecutorService _executor;
+    Context context;
 
-    public UserRequest(){
+    public UserRequest(Context context){
         _executor = Executors.newSingleThreadExecutor();
+        this.context = context;
     }
 
     public Future<Object> updateCharacter(UpdateCharacterOBJ characterObj){
         return _executor.submit(() -> RequestsConstants.putRequest(
                 RequestsConstants.serverHost + "/api/user/character",
                 characterObj,
-                RequestsConstants.BasicRequestResponse.class
+                RequestsConstants.BasicRequestResponse.class,
+                context
         ));
     }
 
@@ -49,7 +48,8 @@ public class UserRequest {
         return _executor.submit(() -> RequestsConstants.putRequest(
                 RequestsConstants.serverHost + "/api/user/profile",
                 editObj,
-                RequestsConstants.BasicRequestResponse.class
+                RequestsConstants.BasicRequestResponse.class,
+                context
         ));
     }
 }

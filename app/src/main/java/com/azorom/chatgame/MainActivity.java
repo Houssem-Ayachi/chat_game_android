@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.PreferencesKeys;
 import androidx.datastore.preferences.rxjava2.RxPreferenceDataStoreBuilder;
 import androidx.datastore.rxjava2.RxDataStore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -30,18 +31,20 @@ public class MainActivity extends AppCompatActivity {
     UserRequest userReqHandler;
     Storage storage;
 
-    public MainActivity(){
-        authHandler = new Auth();
-        userReqHandler = new UserRequest();
-        storage = new Storage(this);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editProfile();
+        authHandler = new Auth(this.getApplicationContext());
+        userReqHandler = new UserRequest(this.getApplicationContext());
+        storage = new Storage(this.getApplicationContext());
+
+//        Intent i = new Intent(this, CharacterCustomization.class);
+//        startActivity(i);
+
+//        storage.saveKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExMzFjODg0MmYzNGM4OGI0MzI0ODAiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTA3VDE5OjI2OjM3LjAyM1oiLCJpYXQiOjE3MTI1MTc5OTd9.fb2n4dbV-zB66LF1XvKOzwLP7jSwoEWjwSWzjXGJzOc");
+//        editProfile();
 //        String key = storage.getKey();
 //        signupUser();
 //        Log.d("STORAGE", key);
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 //        updateCharacter();
     }
 
+    //NOTE: below are some function examples on how to make requests to the server
     private void loginUser(){
         //TODO: (login / password) arguments should be dynamic (coming from user input)
         Auth.LoginOBJ loginObj = new Auth.LoginOBJ("Azorom", "ilovepizza");
@@ -69,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         }else if(resp.response != null){
             Log.d("REQUESTS", "ACCESS KEY: " + resp.response.access_key);
             storage.saveKey(resp.response.access_key);
+            //good to go
         }else{
             Log.d("REQUESTS", "null body");
         }
@@ -92,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }else if(resp.response != null){
             Log.d("REQUESTS", "ACCESS KEY: " + resp.response.access_key);
             storage.saveKey(resp.response.access_key);
+            //good to go
         }else{
             Log.d("REQUESTS", "null body");
         }
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         if(resp.error != null){
             Log.d("REQUESTS", "error " + resp.error.message);
         }else if(resp.response != null){
+            //good to go
             Log.d("REQUESTS", "message " + resp.response.response);
         }else{
             Log.d("REQUESTS", "null body");
@@ -120,10 +127,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateCharacter(){
         UserRequest.UpdateCharacterOBJ characterOBJ = new UserRequest.UpdateCharacterOBJ(
-                "6609660ddaf015cb8266e5ab",
                 "hat3",
-                "head1",
-                "body4"
+                "head1"
         );
         RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse> resp;
         try {
@@ -134,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         if(resp.error != null){
             Log.d("REQUESTS", "error " + resp.error.message);
         }else if(resp.response != null){
+            //good to go
             Log.d("REQUESTS", "response: " + resp.response.response);
         }else{
             Log.d("REQUESTS", "null body");
@@ -142,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void editProfile(){
         UserRequest.EditProfileOBJ editObj = new UserRequest.EditProfileOBJ(
-                "661131c8842f34c88b432480",
-                "Azrorooom",
+                "Azrooom",
                 "a peaceful monk",
                 new String[]{"panda", "peaceful"}
         );
@@ -156,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         if(resp.error != null){
             Log.d("REQUESTS", "error " + resp.error.message);
         }else if(resp.response != null){
+            //good to go
             Log.d("REQUESTS", "response: " + resp.response.response);
         }else{
             Log.d("REQUESTS", "null body");

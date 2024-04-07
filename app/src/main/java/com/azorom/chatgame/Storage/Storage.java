@@ -21,7 +21,7 @@ public class Storage {
 
     public void saveKey(String accessKey){
         RxDataStore<Preferences> dataStore =
-                new RxPreferenceDataStoreBuilder(context.getApplicationContext(), "cache")
+                new RxPreferenceDataStoreBuilder(context, "cache")
                         .build();
         Preferences.Key<String> key = PreferencesKeys.stringKey("accessKey");
         Single<Preferences> updateResult = dataStore.updateDataAsync(prefsIn -> {
@@ -33,9 +33,15 @@ public class Storage {
 
     public String getKey(){
         RxDataStore<Preferences> dataStore =
-                new RxPreferenceDataStoreBuilder(context.getApplicationContext(), "cache")
+                new RxPreferenceDataStoreBuilder(context, "cache")
                         .build();
-        Preferences.Key<String> key = PreferencesKeys.stringKey("accessKey");
+        Preferences.Key<String> key = PreferencesKeys.stringKey("s");
+        Flowable<Boolean> accessKeyExistsF =
+                dataStore.data()
+                        .map(prefs -> prefs.contains(key));
+        if(!accessKeyExistsF.blockingFirst()){
+            return "nothing";
+        }
         Flowable<String> accessKey =
                 dataStore.data()
                         .map(prefs -> prefs.get(key));
@@ -53,5 +59,4 @@ public class Storage {
             return Single.just(mutablePrefs);
         });
     }
-
 }

@@ -1,7 +1,9 @@
 package com.azorom.chatgame.Requests;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.azorom.chatgame.Storage.Storage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,7 +49,13 @@ public abstract class RequestsConstants {
         }
     }
 
-    public static <ResponseType> Object postRequest(String url, Object body, Class<ResponseType> responseClass){
+    public static <ResponseType> Object postRequest(
+            String url,
+            Object body,
+            Class<ResponseType> responseClass,
+            Context context
+    ){
+        Storage storage = new Storage(context);
         OkHttpClient _client = new OkHttpClient();
         ObjectMapper objMapper = new ObjectMapper();
         String jsonString = "";
@@ -62,6 +70,7 @@ public abstract class RequestsConstants {
         Request req = new Request.Builder()
                 .url(url)
                 .post(reqBody)
+                .header("authorization", "Bearer " + storage.getKey())
                 .build();
         String resJSON = "";
         ResponseBody respBody = null;
@@ -95,7 +104,13 @@ public abstract class RequestsConstants {
         return new RequestResponse<>(response, error);
     }
 
-    public static <ResponseType> Object putRequest(String url, Object body, Class<ResponseType> responseClass){
+    public static <ResponseType> Object putRequest(
+            String url,
+            Object body,
+            Class<ResponseType> responseClass,
+            Context context
+    ){
+        Storage storage = new Storage(context);
         OkHttpClient _client = new OkHttpClient();
         ObjectMapper objMapper = new ObjectMapper();
         String jsonString = "";
@@ -110,6 +125,7 @@ public abstract class RequestsConstants {
         Request req = new Request.Builder()
                 .url(url)
                 .put(reqBody)
+                .header("authorization", "Bearer " + storage.getKey())
                 .build();
         String resJSON = "";
         ResponseBody respBody = null;

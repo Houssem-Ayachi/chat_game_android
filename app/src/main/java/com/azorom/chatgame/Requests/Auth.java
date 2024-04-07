@@ -1,5 +1,7 @@
 package com.azorom.chatgame.Requests;
 
+import android.content.Context;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.concurrent.ExecutorService;
@@ -52,16 +54,19 @@ public class Auth {
     }
 
     private final ExecutorService _executor;
+    private final Context context;
 
-    public Auth(){
+    public Auth(Context context){
         _executor = Executors.newSingleThreadExecutor();
+        this.context = context;
     }
 
     public Future<Object> signUp(SignUpOBJ signUpOBJ){
         return _executor.submit(() -> RequestsConstants.postRequest(
                 RequestsConstants.serverHost + "/api/auth/signup",
                 signUpOBJ,
-                AuthResponse.class
+                AuthResponse.class,
+                context
                 )
         );
     }
@@ -70,7 +75,8 @@ public class Auth {
         return _executor.submit(() -> RequestsConstants.postRequest(
                 RequestsConstants.serverHost + "/api/auth/login",
                 loginObj,
-                AuthResponse.class
+                AuthResponse.class,
+                context
                 )
         );
     }
@@ -79,7 +85,8 @@ public class Auth {
         return _executor.submit(() -> RequestsConstants.postRequest(
                 RequestsConstants.serverHost + "/api/auth/verify",
                 codeOBJ,
-                VerificationCodeResponse.class
+                VerificationCodeResponse.class,
+                context
                 )
         );
     }
