@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.azorom.chatgame.Requests.RequestsConstants;
-import com.azorom.chatgame.Requests.UserRequest;
+import com.azorom.chatgame.Requests.Constants.BasicRequestResponse;
+import com.azorom.chatgame.Requests.Constants.RequestResponse;
+import com.azorom.chatgame.Requests.Constants.RequestsConstants;
+import com.azorom.chatgame.Requests.User.UpdateCharacterData;
+import com.azorom.chatgame.Requests.User.UserRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +28,7 @@ public class CharacterCustomization extends AppCompatActivity {
     Map<String, Integer> heads;
     int currHeadIdx = 0;
 
-    UserRequest.UpdateCharacterOBJ characterObj;
+    UpdateCharacterData characterObj;
 
     public CharacterCustomization(){
         userReqHandler = new UserRequest(this.getApplicationContext());
@@ -41,7 +44,7 @@ public class CharacterCustomization extends AppCompatActivity {
         heads.put("hat3", R.drawable.head3);
 
         //default values for the updateCharacterObj to be sent with the request
-        characterObj = new UserRequest.UpdateCharacterOBJ(
+        characterObj = new UpdateCharacterData(
                 "hat1",
                 "head1"
         );
@@ -63,7 +66,7 @@ public class CharacterCustomization extends AppCompatActivity {
         headRight.setOnClickListener(v -> this.headSwitch(1));
 
         Button confirmSetBtn = findViewById(R.id.confirmSet);
-        confirmSetBtn.setOnClickListener(this::confirmSet);
+        confirmSetBtn.setOnClickListener((v) -> this.userReqHandler.updateCharacter(this.characterObj));
     }
 
     private void hatSwitch(int direction){
@@ -94,24 +97,6 @@ public class CharacterCustomization extends AppCompatActivity {
         this.characterObj.head = head;
         ImageView headImg = findViewById(R.id.headImg);
         headImg.setImageResource(headImgId);
-    }
-
-    private void confirmSet(View v){
-        Log.d("HATS", characterObj.hat + characterObj.head);
-        RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse> resp;
-        try {
-            resp = (RequestsConstants.RequestResponse<RequestsConstants.BasicRequestResponse>)userReqHandler.updateCharacter(this.characterObj).get();
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        if(resp.error != null){
-            Log.d("REQUESTS", "error " + resp.error.message);
-        }else if(resp.response != null){
-            Log.d("REQUESTS", "response: " + resp.response.response);
-            //TODO: move to next page here
-        }else{
-            Log.d("REQUESTS", "null body");
-        }
     }
 
 }

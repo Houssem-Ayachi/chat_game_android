@@ -1,4 +1,4 @@
-package com.azorom.chatgame.Requests;
+package com.azorom.chatgame.Requests.Constants;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,34 +20,7 @@ import okhttp3.ResponseBody;
 
 public abstract class RequestsConstants {
 
-    public static class BasicRequestResponse{
-        @JsonProperty("response") public String response;
-    }
-    public static class RequestError{
-        public String message;
-        public String error;
-        public int statusCode;
-        public RequestError(
-                @JsonProperty("message") String message,
-                @JsonProperty("error") String error,
-                @JsonProperty("statusCode") int statusCode
-        ){
-            this.message = message;
-            this.error = error;
-            this.statusCode = statusCode;
-        }
-    }
-
     public static final String serverHost = "http://192.168.56.1:3000";
-
-    public static class RequestResponse<ResponseType> {
-        public ResponseType response;
-        public RequestsConstants.RequestError error;
-        public RequestResponse(ResponseType response, RequestsConstants.RequestError error){
-            this.response = response;
-            this.error = error;
-        }
-    }
 
     public static <ResponseType> Object postRequest(
             String url,
