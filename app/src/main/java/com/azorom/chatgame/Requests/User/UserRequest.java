@@ -1,8 +1,6 @@
 package com.azorom.chatgame.Requests.User;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 
 import com.azorom.chatgame.Requests.Constants.BasicRequestResponse;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;

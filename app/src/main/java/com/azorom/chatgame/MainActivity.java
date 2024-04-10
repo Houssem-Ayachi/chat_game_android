@@ -2,6 +2,7 @@ package com.azorom.chatgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -39,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         userReqHandler = new UserRequest(this.getApplicationContext());
         storage = new Storage(this.getApplicationContext());
 
-//        Intent i = new Intent(this, CharacterCustomization.class);
-//        startActivity(i);
+        Intent i = new Intent(this, CharacterCustomization.class);
+        startActivity(i);
 
-//        storage.saveKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExMzFjODg0MmYzNGM4OGI0MzI0ODAiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTA3VDE5OjI2OjM3LjAyM1oiLCJpYXQiOjE3MTI1MTc5OTd9.fb2n4dbV-zB66LF1XvKOzwLP7jSwoEWjwSWzjXGJzOc");
+        storage.saveKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExMzFjODg0MmYzNGM4OGI0MzI0ODAiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTA3VDE5OjI2OjM3LjAyM1oiLCJpYXQiOjE3MTI1MTc5OTd9.fb2n4dbV-zB66LF1XvKOzwLP7jSwoEWjwSWzjXGJzOc");
     }
 }
