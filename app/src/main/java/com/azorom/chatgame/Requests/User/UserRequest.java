@@ -24,8 +24,7 @@ public class UserRequest {
         return _executor.submit(() -> RequestsConstants.putRequest(
                 RequestsConstants.serverHost + "/api/user/character",
                 characterObj,
-                BasicRequestResponse.class,
-                context
+                BasicRequestResponse.class
         ));
     }
 
@@ -33,24 +32,41 @@ public class UserRequest {
         return _executor.submit(() -> RequestsConstants.putRequest(
                 RequestsConstants.serverHost + "/api/user/profile",
                 editObj,
-                BasicRequestResponse.class,
-                context
+                BasicRequestResponse.class
         ));
     }
 
-    public void updateCharacter(UpdateCharacterData characterOBJ){
+    private Future<Object> sendSearchRequest(String userName){
+        return _executor.submit(() -> RequestsConstants.getRequest(
+                RequestsConstants.serverHost + "/api/user/search/"+userName,
+                SearchedUser[].class
+        ));
+    }
+
+    public RequestResponse<BasicRequestResponse> updateCharacter(UpdateCharacterData characterOBJ){
         RequestResponse<BasicRequestResponse> resp;
         try {
             resp = (RequestResponse<BasicRequestResponse>)this.sendUpdateCharacterRequest(characterOBJ).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        return resp;
     }
 
     public RequestResponse<BasicRequestResponse> editProfile(EditProfileOBJ editObj){
         RequestResponse<BasicRequestResponse> resp;
         try {
             resp = (RequestResponse<BasicRequestResponse>)this.sendEditProfile(editObj).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return resp;
+    }
+
+    public RequestResponse<SearchedUser[]> searchUser(String userName){
+        RequestResponse<SearchedUser[]> resp;
+        try {
+            resp = (RequestResponse<SearchedUser[]>)this.sendSearchRequest(userName).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

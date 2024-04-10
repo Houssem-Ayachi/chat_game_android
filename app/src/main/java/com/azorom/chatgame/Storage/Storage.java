@@ -13,49 +13,39 @@ import io.reactivex.Single;
 
 public class Storage {
 
-    Context context;
-
-    public Storage(Context context){
-        this.context = context;
+    public Storage(){
     }
 
     public void saveKey(String accessKey){
-        RxDataStore<Preferences> dataStore =
-                new RxPreferenceDataStoreBuilder(context, "cache")
-                        .build();
         Preferences.Key<String> key = PreferencesKeys.stringKey("accessKey");
-        Single<Preferences> updateResult = dataStore.updateDataAsync(prefsIn -> {
-            MutablePreferences mutablePrefs = prefsIn.toMutablePreferences();
-            mutablePrefs.set(key, accessKey);
+        Single<Preferences> updateResult = StorageSingleton.instance.getStorage()
+                .updateDataAsync(prefsIn -> {
+                    MutablePreferences mutablePrefs = prefsIn.toMutablePreferences();
+                    mutablePrefs.set(key, accessKey);
             return Single.just(mutablePrefs);
         });
     }
 
     public String getKey(){
-        RxDataStore<Preferences> dataStore =
-                new RxPreferenceDataStoreBuilder(context, "cache")
-                        .build();
-        Preferences.Key<String> key = PreferencesKeys.stringKey("s");
+        Preferences.Key<String> key = PreferencesKeys.stringKey("accessKey");
         Flowable<Boolean> accessKeyExistsF =
-                dataStore.data()
+                StorageSingleton.instance.getStorage().data()
                         .map(prefs -> prefs.contains(key));
         if(!accessKeyExistsF.blockingFirst()){
             return "nothing";
         }
         Flowable<String> accessKey =
-                dataStore.data()
+                StorageSingleton.instance.getStorage().data()
                         .map(prefs -> prefs.get(key));
         return accessKey.blockingFirst();
     }
 
     public void removeKey(){
-        RxDataStore<Preferences> dataStore =
-                new RxPreferenceDataStoreBuilder(context.getApplicationContext(), "cache")
-                        .build();
         Preferences.Key<String> key = PreferencesKeys.stringKey("accessKey");
-        Single<Preferences> updateResult = dataStore.updateDataAsync(prefsIn -> {
-            MutablePreferences mutablePrefs = prefsIn.toMutablePreferences();
-            mutablePrefs.set(key, "");
+        Single<Preferences> updateResult = StorageSingleton.instance.getStorage()
+                .updateDataAsync(prefsIn -> {
+                    MutablePreferences mutablePrefs = prefsIn.toMutablePreferences();
+                    mutablePrefs.set(key, "");
             return Single.just(mutablePrefs);
         });
     }

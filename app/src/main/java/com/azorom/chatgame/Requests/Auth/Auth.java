@@ -25,8 +25,7 @@ public class Auth {
         return _executor.submit(() -> RequestsConstants.postRequest(
                 RequestsConstants.serverHost + "/api/auth/signup",
                 signUpOBJ,
-                AuthResponse.class,
-                context
+                AuthResponse.class
                 )
         );
     }
@@ -35,8 +34,7 @@ public class Auth {
         return _executor.submit(() -> RequestsConstants.postRequest(
                 RequestsConstants.serverHost + "/api/auth/login",
                 loginObj,
-                AuthResponse.class,
-                context
+                AuthResponse.class
                 )
         );
     }
@@ -45,8 +43,7 @@ public class Auth {
         return _executor.submit(() -> RequestsConstants.postRequest(
                 RequestsConstants.serverHost + "/api/auth/verify",
                 codeOBJ,
-                VerificationCodeResponse.class,
-                context
+                VerificationCodeResponse.class
                 )
         );
     }

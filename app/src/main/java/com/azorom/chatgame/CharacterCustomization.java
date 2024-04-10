@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.azorom.chatgame.Requests.Constants.BasicRequestResponse;
+import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.UpdateCharacterData;
 import com.azorom.chatgame.Requests.User.UserRequest;
 
@@ -61,7 +63,7 @@ public class CharacterCustomization extends AppCompatActivity {
 
         Button confirmSetBtn = findViewById(R.id.confirmSet);
         confirmSetBtn.setOnClickListener(
-                (v) -> this.userReqHandler.updateCharacter(this.characterObj)
+                (v) -> this.confirmSet()
         );
     }
 
@@ -92,4 +94,11 @@ public class CharacterCustomization extends AppCompatActivity {
         ImageView headImg = findViewById(R.id.headImg);
         headImg.setImageResource(headImgId);
     }
+
+    private void confirmSet(){
+        RequestResponse<BasicRequestResponse> resp =
+                this.userReqHandler.updateCharacter(this.characterObj);
+        //TODO: handle errors
+    }
+
 }
