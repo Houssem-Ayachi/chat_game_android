@@ -24,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);//
 
-//        signupUser();
+          signupUser();
 //        verifyUser();
 //        loginUser();
-        updateCharacter();
+       // updateCharacter();
     }
 
     private void loginUser(){
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private void signupUser(){
         //TODO: (userName/email/password) arguments should be dynamic (coming from user input)
         Auth.SignUpOBJ signUpOBJ = new Auth.SignUpOBJ(
-                "azorom",
-                "mido.ayachi@gmail.com",
+                "meysem",
+                "meysemguerbejee@gmail.com",
                 "ilovepizzza"
         );
         RequestsConstants.RequestResponse<Auth.AuthResponse> resp;
@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             resp = (RequestsConstants.RequestResponse<Auth.AuthResponse>)this.authHandler.signUp(signUpOBJ).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
+        }
+        if(resp==null){
+            Log.d("REQUESTS","null");
         }
         if(resp.error != null){
             Log.d("REQUESTS", "error " + resp.error.message);

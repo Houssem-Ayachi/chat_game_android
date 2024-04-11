@@ -1,5 +1,7 @@
 package com.azorom.chatgame.Requests;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.concurrent.ExecutorService;

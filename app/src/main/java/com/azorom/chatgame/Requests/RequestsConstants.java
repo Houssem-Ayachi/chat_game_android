@@ -36,7 +36,7 @@ public abstract class RequestsConstants {
         }
     }
 
-    public static final String serverHost = "http://192.168.56.1:3000";
+    public static final String serverHost = "http://192.168.100.13:3000";
 
     public static class RequestResponse<ResponseType> {
         public ResponseType response;
@@ -49,7 +49,7 @@ public abstract class RequestsConstants {
 
     public static <ResponseType> Object postRequest(String url, Object body, Class<ResponseType> responseClass){
         OkHttpClient _client = new OkHttpClient();
-        ObjectMapper objMapper = new ObjectMapper();
+       ObjectMapper objMapper = new ObjectMapper();
         String jsonString = "";
         try {
             jsonString = objMapper.writeValueAsString(body);
