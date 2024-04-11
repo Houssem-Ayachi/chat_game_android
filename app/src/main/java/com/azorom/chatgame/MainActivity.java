@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             storageSingleton.setStorage(this.getApplicationContext());
         }
 
-        Intent i = new Intent(this, HomePage.class);
+        Intent i = new Intent(this, Login.class);
         startActivity(i);
     }
 

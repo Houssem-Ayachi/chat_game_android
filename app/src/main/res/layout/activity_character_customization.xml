@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/customizecaracter"
     tools:context=".CharacterCustomization">
 
     <LinearLayout
@@ -81,13 +82,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/confirmSet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ConfirmSet"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        android:id="@+id/confirmset"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="248dp"
+        android:layout_height="69dp"
+        android:text="Confirm set"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="550dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

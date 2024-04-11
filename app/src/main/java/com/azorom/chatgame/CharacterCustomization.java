@@ -61,7 +61,7 @@ public class CharacterCustomization extends AppCompatActivity {
         Button headRight = findViewById(R.id.headRight);
         headRight.setOnClickListener(v -> this.headSwitch(1));
 
-        Button confirmSetBtn = findViewById(R.id.confirmSet);
+        Button confirmSetBtn = findViewById(R.id.confirmset);
         confirmSetBtn.setOnClickListener(
                 (v) -> this.confirmSet()
         );
