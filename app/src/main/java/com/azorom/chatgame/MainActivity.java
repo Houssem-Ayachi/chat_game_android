@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
             storageSingleton.setStorage(this.getApplicationContext());
         }
         Storage storage = new Storage();
-        storage.saveKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjE3ZGZiZmVkMGMyYzlhZGEwODMyYjUiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTExVDEzOjAzOjU5Ljg3NFoiLCJpYXQiOjE3MTI4NDA2Mzl9.WZmMeheFco4-Af0p-U-Kcb1i_YKmh-9m_p5x0S7-dWQ");
+//        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjE3ZGZiZmVkMGMyYzlhZGEwODMyYjUiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTExVDEzOjAzOjU5Ljg3NFoiLCJpYXQiOjE3MTI4NDA2Mzl9.WZmMeheFco4-Af0p-U-Kcb1i_YKmh-9m_p5x0S7-dWQ
+        storage.saveKey("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjE3ZGUwZWJjYTliMmM2ZjEwYmYxY2YiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTEyVDIzOjAyOjIwLjA2M1oiLCJpYXQiOjE3MTI5NjI5NDB9.Jc5uDGHIcnKBi9wtHhc4tYEziCzCaH8YAyKlrxcUNYw");
         Intent i = new Intent(this, HomePage.class);
         startActivity(i);
         this.finish();
