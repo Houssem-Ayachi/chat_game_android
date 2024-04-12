@@ -43,6 +43,41 @@ public class UserRequest {
         ));
     }
 
+    private Future<Object> sendAddFriendRequest(AddFriendOBJ addFriendOBJ){
+        return _executor.submit(() -> RequestsConstants.postRequest(
+                RequestsConstants.serverHost + "/api/friend/",
+                addFriendOBJ,
+                ChatCreatedResponse.class
+        ));
+    }
+
+    private Future<Object> sendActiveChatsRequest(){
+        return _executor.submit(() -> RequestsConstants.getRequest(
+                RequestsConstants.serverHost + "/api/chat/active",
+                ActiveChatRow[].class
+        ));
+    }
+
+    public RequestResponse<ActiveChatRow[]> getActiveChats(){
+        RequestResponse<ActiveChatRow[]> resp;
+        try {
+            resp = (RequestResponse<ActiveChatRow[]>)this.sendActiveChatsRequest().get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return resp;
+    }
+
+    public RequestResponse<ChatCreatedResponse> addFriend(AddFriendOBJ addFriendOBJ){
+        RequestResponse<ChatCreatedResponse> resp;
+        try {
+            resp = (RequestResponse<ChatCreatedResponse>)this.sendAddFriendRequest(addFriendOBJ).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return resp;
+    }
+
     public RequestResponse<BasicRequestResponse> updateCharacter(UpdateCharacterData characterOBJ){
         RequestResponse<BasicRequestResponse> resp;
         try {
