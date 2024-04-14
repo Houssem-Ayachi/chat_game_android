@@ -7,5 +7,5 @@ public class ActiveChatRow {
     public String chatId;
 
     @JsonProperty("user")
-    public SearchedUser user;
+    public FilteredUser user;
 }

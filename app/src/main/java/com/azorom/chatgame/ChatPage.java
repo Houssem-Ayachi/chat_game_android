@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.azorom.chatgame.Pages.HomePage.HomePage;
+
 public class ChatPage extends AppCompatActivity {
 
     @Override

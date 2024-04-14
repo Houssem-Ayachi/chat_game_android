@@ -2,7 +2,7 @@ package com.azorom.chatgame.Requests.User;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SearchedUser {
+public class FilteredUser {
     @JsonProperty("_id")
     public String _id;
     @JsonProperty("userName")

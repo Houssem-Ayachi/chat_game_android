@@ -3,6 +3,7 @@ package com.azorom.chatgame.Requests.User;
 import android.content.Context;
 
 import com.azorom.chatgame.Requests.Constants.BasicRequestResponse;
+import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.Constants.RequestsConstants;
 
@@ -39,7 +40,7 @@ public class UserRequest {
     private Future<Object> sendSearchRequest(String userName){
         return _executor.submit(() -> RequestsConstants.getRequest(
                 RequestsConstants.serverHost + "/api/user/search/"+userName,
-                SearchedUser[].class
+                FilteredUser[].class
         ));
     }
 
@@ -58,50 +59,50 @@ public class UserRequest {
         ));
     }
 
-    public RequestResponse<ActiveChatRow[]> getActiveChats(){
-        RequestResponse<ActiveChatRow[]> resp;
+    public RequestResponse<ActiveChatRow[], HttpRequestError> getActiveChats(){
+        RequestResponse<ActiveChatRow[], HttpRequestError> resp;
         try {
-            resp = (RequestResponse<ActiveChatRow[]>)this.sendActiveChatsRequest().get();
+            resp = (RequestResponse<ActiveChatRow[], HttpRequestError>)this.sendActiveChatsRequest().get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         return resp;
     }
 
-    public RequestResponse<ChatCreatedResponse> addFriend(AddFriendOBJ addFriendOBJ){
-        RequestResponse<ChatCreatedResponse> resp;
+    public RequestResponse<ChatCreatedResponse, HttpRequestError> addFriend(AddFriendOBJ addFriendOBJ){
+        RequestResponse<ChatCreatedResponse, HttpRequestError> resp;
         try {
-            resp = (RequestResponse<ChatCreatedResponse>)this.sendAddFriendRequest(addFriendOBJ).get();
+            resp = (RequestResponse<ChatCreatedResponse, HttpRequestError>)this.sendAddFriendRequest(addFriendOBJ).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         return resp;
     }
 
-    public RequestResponse<BasicRequestResponse> updateCharacter(UpdateCharacterData characterOBJ){
-        RequestResponse<BasicRequestResponse> resp;
+    public RequestResponse<BasicRequestResponse, HttpRequestError> updateCharacter(UpdateCharacterData characterOBJ){
+        RequestResponse<BasicRequestResponse, HttpRequestError> resp;
         try {
-            resp = (RequestResponse<BasicRequestResponse>)this.sendUpdateCharacterRequest(characterOBJ).get();
+            resp = (RequestResponse<BasicRequestResponse, HttpRequestError>)this.sendUpdateCharacterRequest(characterOBJ).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         return resp;
     }
 
-    public RequestResponse<BasicRequestResponse> editProfile(EditProfileOBJ editObj){
-        RequestResponse<BasicRequestResponse> resp;
+    public RequestResponse<BasicRequestResponse, HttpRequestError> editProfile(EditProfileOBJ editObj){
+        RequestResponse<BasicRequestResponse, HttpRequestError> resp;
         try {
-            resp = (RequestResponse<BasicRequestResponse>)this.sendEditProfile(editObj).get();
+            resp = (RequestResponse<BasicRequestResponse, HttpRequestError>)this.sendEditProfile(editObj).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         return resp;
     }
 
-    public RequestResponse<SearchedUser[]> searchUser(String userName){
-        RequestResponse<SearchedUser[]> resp;
+    public RequestResponse<FilteredUser[], HttpRequestError> searchUser(String userName){
+        RequestResponse<FilteredUser[], HttpRequestError> resp;
         try {
-            resp = (RequestResponse<SearchedUser[]>)this.sendSearchRequest(userName).get();
+            resp = (RequestResponse<FilteredUser[], HttpRequestError>)this.sendSearchRequest(userName).get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
