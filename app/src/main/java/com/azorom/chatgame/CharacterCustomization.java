@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.azorom.chatgame.Requests.Constants.BasicRequestResponse;
+import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.UpdateCharacterData;
 import com.azorom.chatgame.Requests.User.UserRequest;
@@ -96,7 +97,7 @@ public class CharacterCustomization extends AppCompatActivity {
     }
 
     private void confirmSet(){
-        RequestResponse<BasicRequestResponse> resp =
+        RequestResponse<BasicRequestResponse, HttpRequestError> resp =
                 this.userReqHandler.updateCharacter(this.characterObj);
         //TODO: handle errors
     }

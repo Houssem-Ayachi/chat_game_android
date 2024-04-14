@@ -31,7 +31,7 @@
             android:name=".SearchPage"
             android:exported="false" />
         <activity
-            android:name=".HomePage"
+            android:name=".Pages.HomePage.HomePage"
             android:exported="false" />
         <activity
             android:name=".CharacterCustomization"

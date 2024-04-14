@@ -11,10 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.AddFriendOBJ;
 import com.azorom.chatgame.Requests.User.ChatCreatedResponse;
-import com.azorom.chatgame.Requests.User.SearchedUser;
+import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequest;
 import com.azorom.chatgame.Storage.CharacterSets;
 
@@ -46,21 +47,21 @@ public class SearchPage extends AppCompatActivity {
 
     private void searchUser(String userName){
         if(!userName.equals("")){
-            RequestResponse<SearchedUser[]> resp = userReqHandler.searchUser(userName);
+            RequestResponse<FilteredUser[], HttpRequestError> resp = userReqHandler.searchUser(userName);
             if(resp.error != null){
                 Log.d("DEBUG", resp.error.message);
             }else if(resp.response != null){
                 fillUserRows(resp.response);
             }
         }else{
-            fillUserRows(new SearchedUser[]{});
+            fillUserRows(new FilteredUser[]{});
         }
     }
 
-    private void fillUserRows(SearchedUser[] users){
+    private void fillUserRows(FilteredUser[] users){
         LinearLayout container = findViewById(R.id.SearchedUsersRows);
         container.removeAllViews();
-        for(SearchedUser user: users){
+        for(FilteredUser user: users){
             View row = View.inflate(this, R.layout.searched_user_row, null);
             TextView userNameLabel = row.findViewById(R.id.searchedUserNameLabel);
             userNameLabel.setText(user.userName);
@@ -74,7 +75,7 @@ public class SearchPage extends AppCompatActivity {
     }
 
     private void addFriend(String friendId){
-        RequestResponse<ChatCreatedResponse> resp =
+        RequestResponse<ChatCreatedResponse, HttpRequestError> resp =
                 this.userReqHandler.addFriend(new AddFriendOBJ(friendId));
         if(resp.error != null){
             //both users might be friends

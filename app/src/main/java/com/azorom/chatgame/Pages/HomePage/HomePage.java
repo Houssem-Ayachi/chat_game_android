@@ -1,4 +1,4 @@
-package com.azorom.chatgame;
+package com.azorom.chatgame.Pages.HomePage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,16 +11,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.azorom.chatgame.R;
+import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.ActiveChatRow;
+import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequest;
+import com.azorom.chatgame.SearchPage;
 import com.azorom.chatgame.Storage.CharacterSets;
-
-import java.util.Map;
+import com.azorom.chatgame.WS.IncomingObjects.BasicError;
+import com.azorom.chatgame.WS.WSClient;
+import com.azorom.chatgame.WS.WSSingleton;
 
 public class HomePage extends AppCompatActivity {
 
     UserRequest userRequestHandler;
+    WSClient wsc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,12 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         this.userRequestHandler = new UserRequest(this.getApplicationContext());
+        wsc = WSSingleton.getClient();
+
+        wsc.getOnlineFriends(resp -> {
+            RequestResponse<FilteredUser[], BasicError> friends = (RequestResponse<FilteredUser[], BasicError>)resp;
+            Log.d("DEBUG", "" + friends.response.length);
+        });
 
         fillFriendsScroll();
         fillConversationScroll();
@@ -54,9 +66,8 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
-    //TODO: fill conversation data from actual db
     private void fillConversationScroll(){
-        RequestResponse<ActiveChatRow[]> resp = this.userRequestHandler.getActiveChats();
+        RequestResponse<ActiveChatRow[], HttpRequestError> resp = this.userRequestHandler.getActiveChats();
         if(resp.error != null){
             Log.d("DEBUG", resp.error.message);
         }else if(resp.response != null){
