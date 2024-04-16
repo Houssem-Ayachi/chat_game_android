@@ -16,19 +16,19 @@ import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.AddFriendOBJ;
 import com.azorom.chatgame.Requests.User.ChatCreatedResponse;
 import com.azorom.chatgame.Requests.User.FilteredUser;
-import com.azorom.chatgame.Requests.User.UserRequest;
+import com.azorom.chatgame.Requests.User.UserRequests;
 import com.azorom.chatgame.Storage.CharacterSets;
 
 public class SearchPage extends AppCompatActivity {
 
-    UserRequest userReqHandler;
+    UserRequests userReqHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_page);
 
-        userReqHandler = new UserRequest(this.getApplicationContext());
+        userReqHandler = new UserRequests(this.getApplicationContext());
 
         SearchView searchView = findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

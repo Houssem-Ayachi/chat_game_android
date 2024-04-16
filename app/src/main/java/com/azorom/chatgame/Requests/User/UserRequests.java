@@ -12,11 +12,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class UserRequest {
+public class UserRequests {
     private final ExecutorService _executor;
     Context context;
 
-    public UserRequest(Context context){
+    public UserRequests(Context context){
         _executor = Executors.newSingleThreadExecutor();
         this.context = context;
     }
@@ -50,23 +50,6 @@ public class UserRequest {
                 addFriendOBJ,
                 ChatCreatedResponse.class
         ));
-    }
-
-    private Future<Object> sendActiveChatsRequest(){
-        return _executor.submit(() -> RequestsConstants.getRequest(
-                RequestsConstants.serverHost + "/api/chat/active",
-                ActiveChatRow[].class
-        ));
-    }
-
-    public RequestResponse<ActiveChatRow[], HttpRequestError> getActiveChats(){
-        RequestResponse<ActiveChatRow[], HttpRequestError> resp;
-        try {
-            resp = (RequestResponse<ActiveChatRow[], HttpRequestError>)this.sendActiveChatsRequest().get();
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return resp;
     }
 
     public RequestResponse<ChatCreatedResponse, HttpRequestError> addFriend(AddFriendOBJ addFriendOBJ){

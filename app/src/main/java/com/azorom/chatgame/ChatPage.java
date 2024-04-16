@@ -15,6 +15,7 @@ public class ChatPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_page);
         String chatId = getChatId();
+        Log.d("DEBUG", "chatId: " + chatId);
     }
 
     private String getChatId(){
@@ -32,6 +33,5 @@ public class ChatPage extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("DEBUG", "chatPage died");
     }
 }
