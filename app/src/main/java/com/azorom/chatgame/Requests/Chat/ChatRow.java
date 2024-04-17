@@ -8,7 +8,7 @@ public class ChatRow {
     public String chatId;
 
     @JsonProperty("lastMessage")
-    public MessageObj lastMessage;
+    public PlainMessageObj lastMessage;
 
     @JsonProperty("user")
     public FilteredUser user;

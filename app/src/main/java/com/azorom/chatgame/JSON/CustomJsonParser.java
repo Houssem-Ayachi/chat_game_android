@@ -34,11 +34,22 @@ public class CustomJsonParser {
     public static String convertToJson(Object body){
         String jsonString = "";
         try {
-            jsonString = objMapper.writeValueAsString(body);
+            jsonString = objMapper.writer().writeValueAsString(body);
         } catch (JsonProcessingException e) {
-            Log.d("REQUESTS", e.toString());
+            Log.d("DEBUG", e.toString());
             return "";
         }
         return jsonString;
+    }
+
+    public static byte[] convertToBytes(Object body){
+        byte[] bytes;
+        try {
+            bytes = objMapper.writeValueAsBytes(body);
+        } catch (JsonProcessingException e) {
+            Log.d("DEBUG", e.toString());
+            return null;
+        }
+        return bytes;
     }
 }

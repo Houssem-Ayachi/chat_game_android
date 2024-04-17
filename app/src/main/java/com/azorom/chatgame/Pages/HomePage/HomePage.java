@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import com.azorom.chatgame.ChatPage;
 import com.azorom.chatgame.R;
+import com.azorom.chatgame.Requests.Chat.ChatMessage;
 import com.azorom.chatgame.Requests.Chat.ChatRequests;
 import com.azorom.chatgame.Requests.Chat.OnlineChat;
+import com.azorom.chatgame.Requests.Chat.PlainMessageObj;
 import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.Chat.ChatRow;
@@ -24,7 +26,6 @@ import com.azorom.chatgame.SearchPage;
 import com.azorom.chatgame.Storage.CharacterSets;
 import com.azorom.chatgame.WS.IncomingObjects.BasicError;
 import com.azorom.chatgame.WS.IncomingObjects.BasicResponse;
-import com.azorom.chatgame.WS.IncomingObjects.ChatMessage;
 import com.azorom.chatgame.WS.WSClient;
 import com.azorom.chatgame.WS.WSEventsListener;
 import com.azorom.chatgame.WS.WSSingleton;
@@ -37,8 +38,46 @@ public class HomePage extends AppCompatActivity {
     UserRequests userRequestsHandler;
     ChatRequests chatRequestsHandler;
     WSClient wsc;
-    WSEventsListener WSE;
+    WSEventsListener WSE = new WSEventsListener() {
+        @Override
+        public void onUserConnected(RequestResponse<FilteredUser, BasicError> response) {
+            HomePage.this.runOnUiThread(() ->
+                    addFriendToActiveFriendsScroll(response.response)
+            );
+        }
+
+        @Override
+        public void onUserDisconnected(RequestResponse<FilteredUser, BasicError> response) {
+            getOnlineChats();
+        }
+
+        @Override
+        public void onChatMessage(RequestResponse<ChatMessage, BasicError> response) {
+
+        }
+
+        @Override
+        public void onRegistered(RequestResponse<BasicResponse, BasicError> response) {
+
+        }
+
+        @Override
+        public void onSocketConnected() {
+
+        }
+
+        @Override
+        public void onSocketDisconnected() {
+
+        }
+
+        @Override
+        public void onSocketConnectionError() {
+
+        }
+    };
     ExecutorService executorService;
+
 
     public HomePage(){
         this.executorService = Executors.newSingleThreadExecutor();
@@ -56,44 +95,7 @@ public class HomePage extends AppCompatActivity {
 
         init();
 
-        wsc.setListener(new WSEventsListener() {
-            @Override
-            public void onUserConnected(RequestResponse<FilteredUser, BasicError> response) {
-                HomePage.this.runOnUiThread(() ->
-                        addFriendToActiveFriendsScroll(response.response)
-                );
-            }
-
-            @Override
-            public void onUserDisconnected(RequestResponse<FilteredUser, BasicError> response) {
-                getOnlineChats();
-            }
-
-            @Override
-            public void onChatMessage(RequestResponse<ChatMessage, BasicError> response) {
-
-            }
-
-            @Override
-            public void onRegistered(RequestResponse<BasicResponse, BasicError> response) {
-
-            }
-
-            @Override
-            public void onSocketConnected() {
-
-            }
-
-            @Override
-            public void onSocketDisconnected() {
-
-            }
-
-            @Override
-            public void onSocketConnectionError() {
-
-            }
-        });
+        wsc.setListener(WSE);
     }
 
     private void init(){
@@ -176,5 +178,11 @@ public class HomePage extends AppCompatActivity {
         Intent i = new Intent(this, ChatPage.class);
         i.putExtra("chatId", chatId);
         startActivity(i);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.wsc.setListener(WSE);
     }
 }

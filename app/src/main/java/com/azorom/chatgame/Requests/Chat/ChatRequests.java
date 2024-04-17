@@ -34,6 +34,23 @@ public class ChatRequests {
         ));
     }
 
+    private Future<Object> sendGetChatMessages(String chatId){
+        return _executor.submit(() -> RequestsConstants.getRequest(
+           RequestsConstants.serverHost + "/api/chat/messages/"+chatId,
+                ChatMessage[].class
+        ));
+    }
+
+    public RequestResponse<ChatMessage[], HttpRequestError> getChatMessages(String chatId){
+        RequestResponse<ChatMessage[], HttpRequestError> resp;
+        try {
+            resp = (RequestResponse<ChatMessage[], HttpRequestError>)this.sendGetChatMessages(chatId).get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return resp;
+    }
+
     public RequestResponse<OnlineChat, HttpRequestError> getFriendChat(String friendId){
         RequestResponse<OnlineChat, HttpRequestError> resp;
         try {

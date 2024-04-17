@@ -3,6 +3,8 @@ package com.azorom.chatgame.WS;
 import android.util.Log;
 
 import com.azorom.chatgame.JSON.CustomJsonParser;
+import com.azorom.chatgame.Requests.Chat.ChatMessage;
+import com.azorom.chatgame.Requests.Chat.CreateMsgObj;
 import com.azorom.chatgame.Requests.Chat.OnlineChat;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.Constants.RequestsConstants;
@@ -10,7 +12,9 @@ import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Storage.Storage;
 import com.azorom.chatgame.WS.IncomingObjects.BasicError;
 import com.azorom.chatgame.WS.IncomingObjects.BasicResponse;
-import com.azorom.chatgame.WS.IncomingObjects.ChatMessage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URI;
 import java.util.List;
@@ -49,6 +53,16 @@ public class WSClient {
             RequestResponse<OnlineChat[], BasicError> resp = (RequestResponse<OnlineChat[], BasicError>)CustomJsonParser.parseResponse(arg[0].toString(), OnlineChat[].class, BasicError.class);
             ack.resolve(resp);
         });
+    }
+
+    public void sendMessage(CreateMsgObj msgObj){
+        JSONObject obj;
+        try {
+            obj = new JSONObject(CustomJsonParser.convertToJson(msgObj));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        socket.emit(EventsToEmit.SEND_MESSAGE, obj);
     }
 
     private void register(){

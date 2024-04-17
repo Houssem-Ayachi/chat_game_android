@@ -1,8 +1,8 @@
-package com.azorom.chatgame.WS.IncomingObjects;
+package com.azorom.chatgame.Requests.Chat;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ChatMessage {
+public class PlainMessageObj {
     @JsonProperty("senderId")
     public String senderId;
     @JsonProperty("chatId")
@@ -11,4 +11,5 @@ public class ChatMessage {
     public String content;
     @JsonProperty("sticker")
     public String sticker;
+
 }

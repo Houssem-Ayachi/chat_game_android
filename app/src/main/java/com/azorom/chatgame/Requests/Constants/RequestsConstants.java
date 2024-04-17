@@ -4,9 +4,6 @@ import android.util.Log;
 
 import com.azorom.chatgame.JSON.CustomJsonParser;
 import com.azorom.chatgame.Storage.Storage;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 import java.io.IOException;
 
