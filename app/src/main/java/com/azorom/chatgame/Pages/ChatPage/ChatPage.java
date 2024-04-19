@@ -1,30 +1,28 @@
-package com.azorom.chatgame;
+package com.azorom.chatgame.Pages.ChatPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.azorom.chatgame.Pages.ChatPage.Fragments.SendMessageFragment;
+import com.azorom.chatgame.Pages.ChatPage.Fragments.StickersPickerFragment;
 import com.azorom.chatgame.Pages.HomePage.HomePage;
+import com.azorom.chatgame.R;
 import com.azorom.chatgame.Requests.Chat.ChatMessage;
 import com.azorom.chatgame.Requests.Chat.ChatRequests;
 import com.azorom.chatgame.Requests.Chat.CreateMsgObj;
-import com.azorom.chatgame.Requests.Chat.PlainMessageObj;
 import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.FilteredUser;
-import com.azorom.chatgame.Storage.CharacterSets;
+import com.azorom.chatgame.Storage.DrawableSets;
 import com.azorom.chatgame.WS.IncomingObjects.BasicError;
 import com.azorom.chatgame.WS.IncomingObjects.BasicResponse;
 import com.azorom.chatgame.WS.WSClient;
@@ -47,7 +45,7 @@ public class ChatPage extends AppCompatActivity {
     //message property is updated when the editText is submitted
     //sticker property is updated when the user chooses a sticker
     //beacause I couldn't find a way to update them both in the same function
-    CreateMsgObj createdMsg = new CreateMsgObj("", "", "");
+    MessageViewModel messageViewModel;
 
     WSEventsListener wse = new WSEventsListener() {
         @Override
@@ -62,7 +60,6 @@ public class ChatPage extends AppCompatActivity {
 
         @Override
         public void onChatMessage(RequestResponse<ChatMessage, BasicError> response) {
-            Log.d("DEBUG", "new message: " + response.response.content);
             ChatPage.this.runOnUiThread(() -> addNewChatMessage(response.response));
         }
 
@@ -92,46 +89,45 @@ public class ChatPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_page);
 
+        messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
         chatRequestsHandler = new ChatRequests(this.getApplicationContext());
-        wsc = WSSingleton.getClient();
 
+        wsc = WSSingleton.getClient();
         wsc.setListener(wse);
 
         chatId = getChatId();
-        createdMsg.chatId = chatId;
 
+        messageViewModel.setChatId(chatId);
+        messageViewModel.setSendMessageListener(this::sendMessage);
+        messageViewModel.setSwitchToStickerPickerListener(this::setStickerPickerFragment);
+        messageViewModel.setSwitchToMessageListener(this::setSendMessageFragment);
+
+        setSendMessageFragment();
         getChatMessages();
-        handleMessageInput();
     }
 
-    private void handleMessageInput(){
-        EditText messageInput = findViewById(R.id.messageInput);
-        messageInput.setOnKeyListener((view, i, keyEvent) -> {
-            if((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)){
-                createdMsg.message = messageInput.getText().toString();
-                sendMessage();
-                createdMsg.message = "";
-                messageInput.setText("");
-            }
-            return false;
-        });
-        Button sendBtn = findViewById(R.id.sendMsgBtn);
-        sendBtn.setOnClickListener(v -> {
-            createdMsg.message = messageInput.getText().toString();
-            sendMessage();
-            createdMsg.message = "";
-            messageInput.setText("");
-        });
+    private void setSendMessageFragment(){
+        //default fragment for the fragment holder is the sendMessage Fragment;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentHolder, SendMessageFragment.class, null)
+                .commit();
     }
 
-    private void sendMessage(){
+    private void setStickerPickerFragment(){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentHolder, StickersPickerFragment.class, null)
+                .commit();
+    }
+
+    private void sendMessage(CreateMsgObj createdMsg){
         if(Objects.equals(createdMsg.message, "") && Objects.equals(createdMsg.sticker, "")){
             Log.d("DEBUG", "both fields empty");
             //TODO: idk send a notifcation or some thing to aler user;
             return;
         }
         wsc.sendMessage(createdMsg);
-        createdMsg.sticker = "";
     }
 
     private void getChatMessages(){
@@ -177,12 +173,13 @@ public class ChatPage extends AppCompatActivity {
         scrollToLastMessage();
     }
 
+
     private View createChatMessage(ChatMessage message){
         View box = View.inflate(this, R.layout.chat_message, null);
         ImageView hat = box.findViewById(R.id.chatMsgStickerHat);
-        hat.setImageResource(CharacterSets.hats.get(message.user.character.hat));
+        hat.setImageResource(DrawableSets.hats.get(message.user.character.hat));
         ImageView head = box.findViewById(R.id.chatMsgStickerHead);
-        head.setImageResource(CharacterSets.heads.get(message.user.character.head));
+        head.setImageResource(DrawableSets.heads.get(message.user.character.head));
         TextView content = box.findViewById(R.id.chatMsgStickerContent);
         content.setText(message.content);
         return box;
@@ -191,11 +188,13 @@ public class ChatPage extends AppCompatActivity {
     private View createChatMessageWithSticker(ChatMessage message){
         View box = View.inflate(this, R.layout.chat_message_with_sticker, null);
         ImageView hat = box.findViewById(R.id.chatMsgStickerHat);
-        hat.setImageResource(CharacterSets.hats.get(message.user.character.hat));
+        hat.setImageResource(DrawableSets.hats.get(message.user.character.hat));
         ImageView head = box.findViewById(R.id.chatMsgStickerHead);
-        head.setImageResource(CharacterSets.heads.get(message.user.character.head));
+        head.setImageResource(DrawableSets.heads.get(message.user.character.head));
         TextView content = box.findViewById(R.id.chatMsgStickerContent);
         content.setText(message.content);
+        ImageView sticker = box.findViewById(R.id.chatMessageSticker);
+        sticker.setImageResource(DrawableSets.stickers.get(message.sticker));
         return box;
     }
 

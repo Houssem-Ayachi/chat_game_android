@@ -11,13 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.azorom.chatgame.Pages.ChatPage.ChatPage;
 import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.AddFriendOBJ;
 import com.azorom.chatgame.Requests.User.ChatCreatedResponse;
 import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequests;
-import com.azorom.chatgame.Storage.CharacterSets;
+import com.azorom.chatgame.Storage.DrawableSets;
 
 public class SearchPage extends AppCompatActivity {
 
@@ -66,9 +67,9 @@ public class SearchPage extends AppCompatActivity {
             TextView userNameLabel = row.findViewById(R.id.searchedUserNameLabel);
             userNameLabel.setText(user.userName);
             ImageView hat = row.findViewById(R.id.searchedUserHat);
-            hat.setImageResource(CharacterSets.hats.get(user.character.hat));
+            hat.setImageResource(DrawableSets.hats.get(user.character.hat));
             ImageView head = row.findViewById(R.id.searchedUserHead);
-            head.setImageResource(CharacterSets.heads.get(user.character.head));
+            head.setImageResource(DrawableSets.heads.get(user.character.head));
             row.setOnClickListener(v -> this.addFriend(user._id));
             container.addView(row);
         }

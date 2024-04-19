@@ -11,19 +11,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.azorom.chatgame.ChatPage;
+import com.azorom.chatgame.Pages.ChatPage.ChatPage;
 import com.azorom.chatgame.R;
 import com.azorom.chatgame.Requests.Chat.ChatMessage;
 import com.azorom.chatgame.Requests.Chat.ChatRequests;
 import com.azorom.chatgame.Requests.Chat.OnlineChat;
-import com.azorom.chatgame.Requests.Chat.PlainMessageObj;
 import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.Chat.ChatRow;
 import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequests;
 import com.azorom.chatgame.SearchPage;
-import com.azorom.chatgame.Storage.CharacterSets;
+import com.azorom.chatgame.Storage.DrawableSets;
 import com.azorom.chatgame.WS.IncomingObjects.BasicError;
 import com.azorom.chatgame.WS.IncomingObjects.BasicResponse;
 import com.azorom.chatgame.WS.WSClient;
@@ -78,7 +77,6 @@ public class HomePage extends AppCompatActivity {
     };
     ExecutorService executorService;
 
-
     public HomePage(){
         this.executorService = Executors.newSingleThreadExecutor();
     }
@@ -131,9 +129,9 @@ public class HomePage extends AppCompatActivity {
         TextView nameLabel = box.findViewById(R.id.onlineFriendName);
         nameLabel.setText(chat.friend.userName);
         ImageView hat = box.findViewById(R.id.onlineFriendHat);
-        hat.setImageResource(CharacterSets.hats.get(chat.friend.character.hat));
+        hat.setImageResource(DrawableSets.hats.get(chat.friend.character.hat));
         ImageView head = box.findViewById(R.id.onlineFriendHead);
-        head.setImageResource(CharacterSets.heads.get(chat.friend.character.head));
+        head.setImageResource(DrawableSets.heads.get(chat.friend.character.head));
         box.setOnClickListener(v -> sendToChatPage(chat.chatId));
         return box;
     }
@@ -161,11 +159,12 @@ public class HomePage extends AppCompatActivity {
 
     private void addActiveChatToScroll(ChatRow activeChat){
         LinearLayout conversationScroll = findViewById(R.id.convosScroll);
+        conversationScroll.removeAllViews();
         View row = View.inflate(this, R.layout.conversation_row, null);
         ImageView hat = row.findViewById(R.id.convRowHat);
-        hat.setImageResource(CharacterSets.hats.get(activeChat.user.character.hat));
+        hat.setImageResource(DrawableSets.hats.get(activeChat.user.character.hat));
         ImageView head = row.findViewById(R.id.convRowHead);
-        head.setImageResource(CharacterSets.heads.get(activeChat.user.character.head));
+        head.setImageResource(DrawableSets.heads.get(activeChat.user.character.head));
         TextView userNameLabel = row.findViewById(R.id.userNameLabel);
         userNameLabel.setText(activeChat.user.userName);
         TextView lastMessageLabel = row.findViewById(R.id.lastMessage);
@@ -183,6 +182,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        init();
         this.wsc.setListener(WSE);
     }
 }
