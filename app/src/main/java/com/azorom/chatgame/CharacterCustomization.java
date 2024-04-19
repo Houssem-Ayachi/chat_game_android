@@ -7,9 +7,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.azorom.chatgame.Requests.Constants.BasicRequestResponse;
+import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.UpdateCharacterData;
-import com.azorom.chatgame.Requests.User.UserRequest;
+import com.azorom.chatgame.Requests.User.UserRequests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 public class CharacterCustomization extends AppCompatActivity {
 
-    UserRequest userReqHandler;
+    UserRequests userReqHandler;
 
     Map<String, Integer> hats;
     int currHatIdx = 0;
@@ -49,7 +50,7 @@ public class CharacterCustomization extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_customization);
-        userReqHandler = new UserRequest(this.getApplicationContext());
+        userReqHandler = new UserRequests(this.getApplicationContext());
 
         Button hatLeft = findViewById(R.id.hatLeft);
         hatLeft.setOnClickListener(v -> this.hatSwitch(-1));
@@ -96,7 +97,7 @@ public class CharacterCustomization extends AppCompatActivity {
     }
 
     private void confirmSet(){
-        RequestResponse<BasicRequestResponse> resp =
+        RequestResponse<BasicRequestResponse, HttpRequestError> resp =
                 this.userReqHandler.updateCharacter(this.characterObj);
         //TODO: handle errors
     }

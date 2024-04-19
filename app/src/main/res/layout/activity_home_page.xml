@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomePage">
+    tools:context=".Pages.HomePage.HomePage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,11 +34,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <HorizontalScrollView
-            android:id="@+id/onlineFriendsContainer"
+            android:id="@+id/onlineChatsContainer"
             android:layout_width="412dp"
             android:layout_height="95dp"
             android:layout_marginTop="10dp"
-            android:contentDescription="online friends">
+            android:contentDescription="online chats">
 
             <LinearLayout
                 android:id="@+id/onlineFriendsScroll"
