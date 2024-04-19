@@ -11,17 +11,19 @@ import com.azorom.chatgame.Requests.Auth.Auth;
 import com.azorom.chatgame.Requests.Auth.AuthResponse;
 import com.azorom.chatgame.Requests.Auth.LoginOBJ;
 import com.azorom.chatgame.Requests.Auth.SignUpOBJ;
+import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Storage.Storage;
 
 public class CreateAccount extends AppCompatActivity {
     Auth authHandler;
+    Storage storage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-        Intent intent2 = getIntent();
         authHandler = new Auth(this.getApplicationContext());
+        storage=new Storage();
         Button c = findViewById(R.id.Create);
         c.setOnClickListener(v -> {
             Create();
@@ -31,7 +33,7 @@ public class CreateAccount extends AppCompatActivity {
         String username=((EditText)findViewById(R.id.name)).getText().toString();
         String email=((EditText)findViewById(R.id.Email)).getText().toString();
         String password=((EditText)findViewById(R.id.Password)).getText().toString();
-        String ConfirmPassword=((EditText)findViewById(R.id.confirmpassword)).getText().toString();
+        String confirmPassword=((EditText)findViewById(R.id.confirmpassword)).getText().toString();
 
         if(username.equals("")){
             //Not allowed
@@ -45,18 +47,20 @@ public class CreateAccount extends AppCompatActivity {
             //Not allowed
             return;
         }
-        if(ConfirmPassword.equals("")){
+        if(confirmPassword.equals("")){
             //Not allowed
             return;
         }
-        if(!password.equals(ConfirmPassword)){
+        if(!password.equals(confirmPassword)){
             //Not allowed
             return;
         }
         SignUpOBJ signupObj = new SignUpOBJ(username,email,password);
-        RequestResponse<AuthResponse> resp = authHandler.signUp(signupObj);
+        RequestResponse<AuthResponse, HttpRequestError> resp = authHandler.signupUser(signupObj);
         if(resp.response != null){
+            storage.saveKey(resp.response.access_key);
             Intent intent3 = new Intent(CreateAccount.this, VerifyMail.class);
+            intent3.putExtra("email", email);
             startActivity(intent3);
         }
 

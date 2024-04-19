@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.azorom.chatgame.Pages.HomePage.HomePage;
 import com.azorom.chatgame.Requests.Auth.Auth;
 import com.azorom.chatgame.Requests.Auth.AuthResponse;
 import com.azorom.chatgame.Requests.Auth.LoginOBJ;
+import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Storage.Storage;
 
@@ -20,7 +22,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        storage=new Storage();
         authHandler = new Auth(this.getApplicationContext());
         Intent intent1 = new Intent(Login.this, CreateAccount.class);
         Button b = findViewById(R.id.login);
@@ -47,7 +49,7 @@ public class Login extends AppCompatActivity {
             return;
         }
         LoginOBJ loginObj = new LoginOBJ(userName, password);
-        RequestResponse<AuthResponse> resp = authHandler.loginUser(loginObj);
+        RequestResponse<AuthResponse, HttpRequestError> resp = authHandler.loginUser(loginObj);
         if(resp.response != null){
             storage.saveKey(resp.response.access_key);
             Intent i = new Intent(Login.this, HomePage.class);
