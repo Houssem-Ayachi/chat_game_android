@@ -16,17 +16,7 @@ public class MyProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-        Intent intent=getIntent();
-        String username = intent.getStringExtra("username");
-        String funfact = intent.getStringExtra("funfact");
-        String bio = intent.getStringExtra("bio");
-        TextView name=findViewById(R.id.usernametext);
-        TextView bioo=findViewById(R.id.biotext);
-        TextView fct=findViewById(R.id.funfacttext);
 
-        name.setText(username);
-        fct.setText(funfact);
-        bioo.setText(bio);
         Button b = findViewById(R.id.EditProfile);
         b.setOnClickListener(v -> {
             Intent intent2 = new Intent(MyProfile.this, EditProfile.class);

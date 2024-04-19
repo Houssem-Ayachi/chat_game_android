@@ -22,13 +22,8 @@ public class Waiting extends AppCompatActivity {
             public void run() {
                 videoView.stopPlayback();
             }
-        }, 5000);
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                videoView.start();
-            }
-        });
+        }, 10000);
+
     }
 }
 

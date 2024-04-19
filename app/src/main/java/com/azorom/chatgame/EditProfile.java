@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.azorom.chatgame.Pages.HomePage.HomePage;
 import com.azorom.chatgame.Requests.Auth.Auth;
 
 public class EditProfile extends AppCompatActivity {
@@ -37,10 +38,7 @@ public class EditProfile extends AppCompatActivity {
             //Not allowed
             return;
         }
-        Intent i = new Intent(EditProfile.this, MyProfile.class);
-        i.putExtra("username",username );
-        i.putExtra("funfact",funfact);
-        i.putExtra("bio",bio);
+        Intent i = new Intent(EditProfile.this, HomePage.class);
         startActivity(i);
     }
 }
