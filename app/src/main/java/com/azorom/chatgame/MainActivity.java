@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         WSClient wsc = WSSingleton.getClient();
 
-        Intent i = new Intent(this, HomePage.class);
+        Intent i = new Intent(this, Waiting.class);
         startActivity(i);
         this.finish();
     }

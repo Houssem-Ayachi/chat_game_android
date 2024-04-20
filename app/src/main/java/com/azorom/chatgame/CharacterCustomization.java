@@ -2,6 +2,7 @@ package com.azorom.chatgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -66,6 +67,7 @@ public class CharacterCustomization extends AppCompatActivity {
         confirmSetBtn.setOnClickListener(
                 (v) -> this.confirmSet()
         );
+
     }
 
     private void hatSwitch(int direction){
@@ -100,6 +102,9 @@ public class CharacterCustomization extends AppCompatActivity {
         RequestResponse<BasicRequestResponse, HttpRequestError> resp =
                 this.userReqHandler.updateCharacter(this.characterObj);
         //TODO: handle errors
+
+        Intent intent= new Intent(CharacterCustomization.this, EditProfile.class);
+        startActivity(intent);
     }
 
 }

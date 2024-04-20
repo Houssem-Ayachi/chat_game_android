@@ -16,6 +16,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Store"
+            android:exported="false" />
+        <activity
+            android:name=".Waiting"
+            android:exported="false" />
+        <activity
+            android:name=".Store"
+            android:exported="false" />
+        <activity
+            android:name=".Waiting"
+            android:exported="false" />
+        <activity
             android:name=".Pages.ChatPage.ChatPage"
             android:exported="false" />
         <activity
