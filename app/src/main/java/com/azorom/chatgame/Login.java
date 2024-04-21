@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,15 +23,16 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         storage=new Storage();
         authHandler = new Auth(this.getApplicationContext());
-        Intent intent1 = new Intent(Login.this, CreateAccount.class);
+
         Button b = findViewById(R.id.login);
-        b.setOnClickListener(v -> {
-           login();
-        });
+        b.setOnClickListener(v -> login());
+
         Button btn=findViewById(R.id.createaccount);
         btn.setOnClickListener(v -> {
+            Intent intent1 = new Intent(Login.this, CreateAccount.class);
            startActivity(intent1);
         });
     }
@@ -54,6 +56,9 @@ public class Login extends AppCompatActivity {
             storage.saveKey(resp.response.access_key);
             Intent i = new Intent(Login.this, HomePage.class);
             startActivity(i);
+            this.finish();
+        }else if(resp.error != null){
+            Log.d("DEBUG", "error: " + resp.error.message);
         }
     }
 }

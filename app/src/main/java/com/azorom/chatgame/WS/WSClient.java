@@ -55,6 +55,10 @@ public class WSClient {
         });
     }
 
+    public void disconnect(){
+        socket.disconnect();
+    }
+
     public void sendMessage(CreateMsgObj msgObj){
         JSONObject obj;
         try {

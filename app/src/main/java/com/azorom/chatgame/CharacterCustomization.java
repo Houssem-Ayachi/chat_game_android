@@ -12,6 +12,7 @@ import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.UpdateCharacterData;
 import com.azorom.chatgame.Requests.User.UserRequests;
+import com.azorom.chatgame.Storage.DrawableSets;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,24 +22,13 @@ public class CharacterCustomization extends AppCompatActivity {
 
     UserRequests userReqHandler;
 
-    Map<String, Integer> hats;
     int currHatIdx = 0;
-    Map<String, Integer> heads;
     int currHeadIdx = 0;
 
     UpdateCharacterData characterObj;
 
     public CharacterCustomization(){
 
-        hats = new HashMap<>();
-        hats.put("hat1", R.drawable.hat1);
-        hats.put("hat2", R.drawable.hat2);
-        hats.put("hat3", R.drawable.hat3);
-
-        heads = new HashMap<>();
-        heads.put("hat1", R.drawable.head1);
-        heads.put("hat2", R.drawable.head2);
-        heads.put("hat3", R.drawable.head3);
 
         //default values for the updateCharacterObj to be sent with the request
         characterObj = new UpdateCharacterData(
@@ -53,14 +43,14 @@ public class CharacterCustomization extends AppCompatActivity {
         setContentView(R.layout.activity_character_customization);
         userReqHandler = new UserRequests(this.getApplicationContext());
 
-        Button hatLeft = findViewById(R.id.hatLeft);
+        ImageView hatLeft = findViewById(R.id.hatLeft);
         hatLeft.setOnClickListener(v -> this.hatSwitch(-1));
-        Button hatRight = findViewById(R.id.hatRight);
+        ImageView hatRight = findViewById(R.id.hatRight);
         hatRight.setOnClickListener(v -> this.hatSwitch(1));
 
-        Button headLeft = findViewById(R.id.headLeft);
+        ImageView headLeft = findViewById(R.id.headLeft);
         headLeft.setOnClickListener(v -> this.headSwitch(-1));
-        Button headRight = findViewById(R.id.headRight);
+        ImageView headRight = findViewById(R.id.headRight);
         headRight.setOnClickListener(v -> this.headSwitch(1));
 
         Button confirmSetBtn = findViewById(R.id.confirmset);
@@ -73,13 +63,13 @@ public class CharacterCustomization extends AppCompatActivity {
     private void hatSwitch(int direction){
         currHatIdx += direction;
         if (currHatIdx < 0){
-            currHatIdx = hats.keySet().size()-1;
-        }else if(currHatIdx >= hats.keySet().size()){
+            currHatIdx = DrawableSets.hats.keySet().size()-1;
+        }else if(currHatIdx >= DrawableSets.hats.keySet().size()){
             currHatIdx = 0;
         }
-        String hat = (new ArrayList<>(hats.keySet())).get(currHatIdx);
+        String hat = (new ArrayList<>(DrawableSets.hats.keySet())).get(currHatIdx);
         this.characterObj.hat = hat;
-        int hatImgId = hats.get(hat);
+        int hatImgId = DrawableSets.hats.get(hat);
         ImageView hatImg = findViewById(R.id.hatImg);
         hatImg.setImageResource(hatImgId);
     }
@@ -87,12 +77,12 @@ public class CharacterCustomization extends AppCompatActivity {
     private void headSwitch(int direction){
         currHeadIdx += direction;
         if (currHeadIdx < 0){
-            currHeadIdx = heads.keySet().size()-1;
-        }else if(currHeadIdx >= heads.keySet().size()){
+            currHeadIdx = DrawableSets.heads.keySet().size()-1;
+        }else if(currHeadIdx >= DrawableSets.heads.keySet().size()){
             currHeadIdx = 0;
         }
-        String head = (new ArrayList<String>(heads.keySet())).get(currHeadIdx);
-        int headImgId = heads.get(head);
+        String head = (new ArrayList<String>(DrawableSets.heads.keySet())).get(currHeadIdx);
+        int headImgId = DrawableSets.heads.get(head);
         this.characterObj.head = head;
         ImageView headImg = findViewById(R.id.headImg);
         headImg.setImageResource(headImgId);
@@ -105,6 +95,7 @@ public class CharacterCustomization extends AppCompatActivity {
 
         Intent intent= new Intent(CharacterCustomization.this, EditProfile.class);
         startActivity(intent);
+        this.finish();
     }
 
 }

@@ -1,7 +1,5 @@
 package com.azorom.chatgame.WS;
 
-import android.util.Log;
-
 public class WSSingleton {
 
     private static WSClient wsc;
@@ -12,4 +10,12 @@ public class WSSingleton {
         }
         return wsc;
     }
+
+    public static void disconnect(){
+        if(wsc != null){
+            wsc.disconnect();
+            wsc = null;
+        }
+    }
+
 }

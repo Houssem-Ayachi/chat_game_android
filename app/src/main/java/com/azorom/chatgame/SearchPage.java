@@ -81,8 +81,9 @@ public class SearchPage extends AppCompatActivity {
         if(resp.error != null){
             //both users might be friends
             Log.d("DEBUG", resp.error.message);
-            if(resp.error.message == "already friends"){
+            if(resp.error.message.equals("already friends")){
                 //get their chat id and send user to it;
+                Log.d("DEBUG", "already friends");
             }
         }else if(resp.response != null){
             //after adding both users to each other's frinds list

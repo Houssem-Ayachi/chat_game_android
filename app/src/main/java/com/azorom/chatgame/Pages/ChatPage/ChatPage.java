@@ -1,13 +1,13 @@
 package com.azorom.chatgame.Pages.ChatPage;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,14 +31,11 @@ import com.azorom.chatgame.WS.WSSingleton;
 
 import java.util.Objects;
 
-//TODO: add sticker logic (can't send stickers for now)
-
 public class ChatPage extends AppCompatActivity {
 
     String chatId;
     ChatRequests chatRequestsHandler;
     WSClient wsc;
-    ChatMessage messages[];
 
     //NOTE: using this object to construct the message to send
     //it is being used this way so it can contain both a message and a sticker
@@ -60,7 +57,7 @@ public class ChatPage extends AppCompatActivity {
 
         @Override
         public void onChatMessage(RequestResponse<ChatMessage, BasicError> response) {
-            ChatPage.this.runOnUiThread(() -> addNewChatMessage(response.response));
+            ChatPage.this.runOnUiThread(() -> addNewChatMessage());
         }
 
         @Override
@@ -137,65 +134,17 @@ public class ChatPage extends AppCompatActivity {
             return;
         }
         if(resp.response != null){
-            messages = resp.response;
             fillChatWithMessages(resp.response);
         }
     }
 
-    private void scrollToLastMessage(){
-        NestedScrollView scroll = findViewById(R.id.messagesScroll);
-        scroll.post(() -> scroll.fullScroll(View.FOCUS_DOWN));
-    }
-
-    private void addNewChatMessage(ChatMessage message){
-        LinearLayout msgsContainer = findViewById(R.id.messagesContainer);
-        View messageView;
-        if(Objects.equals(message.sticker, "")){
-            messageView = createChatMessage(message);
-        }else{
-            messageView = createChatMessageWithSticker(message);
-        }
-        msgsContainer.addView(messageView);
-        scrollToLastMessage();
+    private void addNewChatMessage(){
+        getChatMessages();
     }
 
     private void fillChatWithMessages(ChatMessage[] messages){
-        LinearLayout msgsContainer = findViewById(R.id.messagesContainer);
-        for(ChatMessage message: messages){
-            View messageView;
-            if(message.sticker == ""){
-                messageView = createChatMessage(message);
-            }else{
-                messageView = createChatMessageWithSticker(message);
-            }
-            msgsContainer.addView(messageView);
-        }
-        scrollToLastMessage();
-    }
-
-
-    private View createChatMessage(ChatMessage message){
-        View box = View.inflate(this, R.layout.chat_message, null);
-        ImageView hat = box.findViewById(R.id.chatMsgStickerHat);
-        hat.setImageResource(DrawableSets.hats.get(message.user.character.hat));
-        ImageView head = box.findViewById(R.id.chatMsgStickerHead);
-        head.setImageResource(DrawableSets.heads.get(message.user.character.head));
-        TextView content = box.findViewById(R.id.chatMsgStickerContent);
-        content.setText(message.content);
-        return box;
-    }
-
-    private View createChatMessageWithSticker(ChatMessage message){
-        View box = View.inflate(this, R.layout.chat_message_with_sticker, null);
-        ImageView hat = box.findViewById(R.id.chatMsgStickerHat);
-        hat.setImageResource(DrawableSets.hats.get(message.user.character.hat));
-        ImageView head = box.findViewById(R.id.chatMsgStickerHead);
-        head.setImageResource(DrawableSets.heads.get(message.user.character.head));
-        TextView content = box.findViewById(R.id.chatMsgStickerContent);
-        content.setText(message.content);
-        ImageView sticker = box.findViewById(R.id.chatMessageSticker);
-        sticker.setImageResource(DrawableSets.stickers.get(message.sticker));
-        return box;
+        GridView msgsContainer = findViewById(R.id.messagesContainer);
+        msgsContainer.setAdapter(new MessagesAdapter(this, messages));
     }
 
     private String getChatId(){

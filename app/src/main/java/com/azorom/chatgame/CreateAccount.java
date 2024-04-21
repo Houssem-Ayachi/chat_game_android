@@ -15,6 +15,8 @@ import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Storage.Storage;
 
+//TODO: HANDLE INPUT ERRORS
+
 public class CreateAccount extends AppCompatActivity {
     Auth authHandler;
     Storage storage;
@@ -25,20 +27,14 @@ public class CreateAccount extends AppCompatActivity {
         authHandler = new Auth(this.getApplicationContext());
         storage=new Storage();
         Button c = findViewById(R.id.Create);
-        c.setOnClickListener(v -> {
-            Create();
-        });
+        c.setOnClickListener(v -> Create());
     }
+
     private void Create(){
-        String username=((EditText)findViewById(R.id.name)).getText().toString();
         String email=((EditText)findViewById(R.id.Email)).getText().toString();
         String password=((EditText)findViewById(R.id.Password)).getText().toString();
         String confirmPassword=((EditText)findViewById(R.id.confirmpassword)).getText().toString();
 
-        if(username.equals("")){
-            //Not allowed
-            return;
-        }
         if(password.equals("")){
             //Not allowed
             return;
@@ -55,13 +51,14 @@ public class CreateAccount extends AppCompatActivity {
             //Not allowed
             return;
         }
-        SignUpOBJ signupObj = new SignUpOBJ(username,email,password);
+        SignUpOBJ signupObj = new SignUpOBJ(email,password);
         RequestResponse<AuthResponse, HttpRequestError> resp = authHandler.signupUser(signupObj);
         if(resp.response != null){
             storage.saveKey(resp.response.access_key);
             Intent intent3 = new Intent(CreateAccount.this, VerifyMail.class);
             intent3.putExtra("email", email);
             startActivity(intent3);
+            this.finish();
         }
 
 

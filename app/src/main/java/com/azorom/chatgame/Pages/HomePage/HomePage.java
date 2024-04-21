@@ -1,16 +1,23 @@
 package com.azorom.chatgame.Pages.HomePage;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 
+import com.azorom.chatgame.Login;
+import com.azorom.chatgame.MyProfile;
 import com.azorom.chatgame.Pages.ChatPage.ChatPage;
 import com.azorom.chatgame.R;
 import com.azorom.chatgame.Requests.Chat.ChatMessage;
@@ -23,17 +30,20 @@ import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequests;
 import com.azorom.chatgame.SearchPage;
 import com.azorom.chatgame.Storage.DrawableSets;
+import com.azorom.chatgame.Storage.Storage;
 import com.azorom.chatgame.WS.IncomingObjects.BasicError;
 import com.azorom.chatgame.WS.IncomingObjects.BasicResponse;
 import com.azorom.chatgame.WS.WSClient;
 import com.azorom.chatgame.WS.WSEventsListener;
 import com.azorom.chatgame.WS.WSSingleton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HomePage extends AppCompatActivity {
 
+    Storage storage;
     UserRequests userRequestsHandler;
     ChatRequests chatRequestsHandler;
     WSClient wsc;
@@ -86,6 +96,8 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        storage = new Storage();
+
         this.userRequestsHandler = new UserRequests(this.getApplicationContext());
         this.chatRequestsHandler = new ChatRequests(this.getApplicationContext());
 
@@ -97,13 +109,47 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void init(){
+        setSideBar();
         getOnlineChats();
         fillConversationScroll();
-        Button searchButton = findViewById(R.id.searchBtn);
-        searchButton.setOnClickListener(v -> {
-            Intent i = new Intent(this, SearchPage.class);
-            startActivity(i);
+    }
+
+    private void setSideBar(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(findViewById(R.id.toolbar));
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        setSideBarItemsActions();
+    }
+
+    private void setSideBarItemsActions(){
+        NavigationView navView = findViewById(R.id.navigation_view);
+        navView.setNavigationItemSelectedListener(item -> {
+            String itemTitle = item.getTitle().toString();
+            switch (itemTitle){
+                case "Search":
+                    startActivity(new Intent(this, SearchPage.class));
+                    break;
+                case "Profile":
+                    startActivity(new Intent(this, MyProfile.class));
+                    break;
+                case "Logout":
+                    logout();
+                    break;
+            }
+            return false;
         });
+    }
+
+    private void logout(){
+        storage.removeKey();
+        WSSingleton.disconnect();
+        startActivity(new Intent(this, Login.class));
+        this.finish();
     }
 
     private void getOnlineChats(){
@@ -147,30 +193,17 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void fillConversationScroll(){
+        ListView conversationScroll = findViewById(R.id.convosScroll);
         RequestResponse<ChatRow[], HttpRequestError> resp = this.chatRequestsHandler.getActiveChats();
         if(resp.error != null){
             Log.d("DEBUG", resp.error.message);
         }else if(resp.response != null){
-            for(ChatRow activeChat: resp.response){
-                addActiveChatToScroll(activeChat);
-            }
+            conversationScroll.setOnItemClickListener((adapterView, view, i, l) -> {
+                ChatRow selectedChat = (ChatRow)adapterView.getItemAtPosition(i);
+                sendToChatPage(selectedChat.chatId);
+            });
+            conversationScroll.setAdapter(new ActiveChatsAdapter(this, resp.response));
         }
-    }
-
-    private void addActiveChatToScroll(ChatRow activeChat){
-        LinearLayout conversationScroll = findViewById(R.id.convosScroll);
-        conversationScroll.removeAllViews();
-        View row = View.inflate(this, R.layout.conversation_row, null);
-        ImageView hat = row.findViewById(R.id.convRowHat);
-        hat.setImageResource(DrawableSets.hats.get(activeChat.user.character.hat));
-        ImageView head = row.findViewById(R.id.convRowHead);
-        head.setImageResource(DrawableSets.heads.get(activeChat.user.character.head));
-        TextView userNameLabel = row.findViewById(R.id.userNameLabel);
-        userNameLabel.setText(activeChat.user.userName);
-        TextView lastMessageLabel = row.findViewById(R.id.lastMessage);
-        lastMessageLabel.setText(activeChat.lastMessage.content);
-        conversationScroll.addView(row);
-        row.setOnClickListener(v -> sendToChatPage(activeChat.chatId));
     }
 
     private void sendToChatPage(String chatId){

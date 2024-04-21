@@ -7,17 +7,19 @@
 
     <ImageView
         android:id="@+id/chatMsgStickerHat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hat1" />
 
     <ImageView
         android:id="@+id/chatMsgStickerHead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="44dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/chatMsgStickerHat"
         app:srcCompat="@drawable/head1" />
@@ -26,8 +28,8 @@
         android:id="@+id/chatMsgStickerContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/chatMsgStickerHead"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,10 +38,10 @@
         android:id="@+id/chatMessageSticker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.239"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chatMsgStickerContent"
-        app:srcCompat="@drawable/hatt4" />
+        app:srcCompat="@drawable/hat3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

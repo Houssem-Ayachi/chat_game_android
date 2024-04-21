@@ -1,5 +1,6 @@
 package com.azorom.chatgame.Storage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import androidx.datastore.preferences.core.MutablePreferences;
@@ -32,7 +33,7 @@ public class Storage {
                 StorageSingleton.instance.getStorage().data()
                         .map(prefs -> prefs.contains(key));
         if(!accessKeyExistsF.blockingFirst()){
-            return "nothing";
+            return "";
         }
         Flowable<String> accessKey =
                 StorageSingleton.instance.getStorage().data()
@@ -48,5 +49,6 @@ public class Storage {
                     mutablePrefs.set(key, "");
             return Single.just(mutablePrefs);
         });
+        updateResult.blockingGet();
     }
 }

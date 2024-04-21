@@ -5,42 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/friendDescriptionContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/onlineFriendHat"
+        android:layout_width="52dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="32dp"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/hat1" />
 
-        <ImageView
-            android:id="@+id/onlineFriendHat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:scaleX="2"
-            android:scaleY="2"
-            app:srcCompat="@drawable/hat1" />
+    <ImageView
+        android:id="@+id/onlineFriendHead"
+        android:layout_width="51dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onlineFriendHat"
+        app:srcCompat="@drawable/head1" />
 
-        <ImageView
-            android:id="@+id/onlineFriendHead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:scaleX="2"
-            android:scaleY="2"
-            app:srcCompat="@drawable/head1" />
-
-        <TextView
-            android:id="@+id/onlineFriendName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="user" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/onlineFriendName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="36dp"
+        android:text="user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onlineFriendHead" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
