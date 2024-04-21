@@ -52,6 +52,23 @@ public class UserRequests {
         ));
     }
 
+    private Future<Object> sendGetUserProfileRequest(){
+        return _executor.submit(() -> RequestsConstants.getRequest(
+           RequestsConstants.serverHost + "/api/user/profile",
+           UserProfileResp.class
+        ));
+    }
+
+    public RequestResponse<UserProfileResp, HttpRequestError> getUserProfile(){
+        RequestResponse<UserProfileResp, HttpRequestError> resp;
+        try {
+            resp = (RequestResponse<UserProfileResp, HttpRequestError>)this.sendGetUserProfileRequest().get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return resp;
+    }
+
     public RequestResponse<ChatCreatedResponse, HttpRequestError> addFriend(AddFriendOBJ addFriendOBJ){
         RequestResponse<ChatCreatedResponse, HttpRequestError> resp;
         try {

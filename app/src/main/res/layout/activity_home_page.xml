@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Pages.HomePage.HomePage"
     android:id="@+id/drawer_layout"
+    android:background="@drawable/bg"
     >
 
     <LinearLayout
@@ -18,24 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize" />
 
-        <HorizontalScrollView
-            android:id="@+id/onlineChatsContainer"
-            android:layout_width="412dp"
-            android:layout_height="95dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="online chats">
-
-            <LinearLayout
-                android:id="@+id/onlineFriendsScroll"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/onlineFriendsScroll"
+            android:layout_width="match_parent"
+            android:layout_height="117dp" />
 
         <ListView
             android:id="@+id/convosScroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

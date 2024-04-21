@@ -7,14 +7,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.azorom.chatgame.Login;
 import com.azorom.chatgame.MyProfile;
@@ -29,7 +25,6 @@ import com.azorom.chatgame.Requests.Chat.ChatRow;
 import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequests;
 import com.azorom.chatgame.SearchPage;
-import com.azorom.chatgame.Storage.DrawableSets;
 import com.azorom.chatgame.Storage.Storage;
 import com.azorom.chatgame.WS.IncomingObjects.BasicError;
 import com.azorom.chatgame.WS.IncomingObjects.BasicResponse;
@@ -51,7 +46,7 @@ public class HomePage extends AppCompatActivity {
         @Override
         public void onUserConnected(RequestResponse<FilteredUser, BasicError> response) {
             HomePage.this.runOnUiThread(() ->
-                    addFriendToActiveFriendsScroll(response.response)
+                    getOnlineChats()
             );
         }
 
@@ -110,6 +105,7 @@ public class HomePage extends AppCompatActivity {
 
     private void init(){
         setSideBar();
+        setOnlineFriendScroll();
         getOnlineChats();
         fillConversationScroll();
     }
@@ -156,40 +152,19 @@ public class HomePage extends AppCompatActivity {
         wsc.getOnlineFriends(resp -> {
             RequestResponse<OnlineChat[], BasicError> friends = (RequestResponse<OnlineChat[], BasicError>)resp;
             HomePage.this.runOnUiThread(() -> {
-                fillOnlineFriendsScroll(friends.response);
+                RecyclerView friendsScroll = findViewById(R.id.onlineFriendsScroll);
+                friendsScroll.setAdapter(new OnlineChatsAdapter(
+                        friends.response,
+                        chat -> sendToChatPage(chat.chatId)
+                ));
             });
         });
     }
 
-    private void fillOnlineFriendsScroll(OnlineChat[] friends){
-        LinearLayout friendsScroll = findViewById(R.id.onlineFriendsScroll);
-        friendsScroll.removeAllViews();
-        for(OnlineChat friend: friends){
-            View box = createOnlineFriendView(friend);
-            friendsScroll.addView(box);
-        }
-    }
-
-    private View createOnlineFriendView(OnlineChat chat){
-        View box = View.inflate(this, R.layout.online_chat_description, null);
-        TextView nameLabel = box.findViewById(R.id.onlineFriendName);
-        nameLabel.setText(chat.friend.userName);
-        ImageView hat = box.findViewById(R.id.onlineFriendHat);
-        hat.setImageResource(DrawableSets.hats.get(chat.friend.character.hat));
-        ImageView head = box.findViewById(R.id.onlineFriendHead);
-        head.setImageResource(DrawableSets.heads.get(chat.friend.character.head));
-        box.setOnClickListener(v -> sendToChatPage(chat.chatId));
-        return box;
-    }
-
-    private void addFriendToActiveFriendsScroll(FilteredUser friend){
-        RequestResponse<OnlineChat, HttpRequestError> onlineChat = chatRequestsHandler.getFriendChat(friend._id);
-        if(onlineChat.error != null){
-            //TODO: handle this error (pls future me)
-            return;
-        }
-        LinearLayout friendsScroll = findViewById(R.id.onlineFriendsScroll);
-        friendsScroll.addView(createOnlineFriendView(onlineChat.response));
+    private void setOnlineFriendScroll(){
+        RecyclerView onlineFriendsContainer = findViewById(R.id.onlineFriendsScroll);
+        LinearLayoutManager layoutManager= new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        onlineFriendsContainer.setLayoutManager(layoutManager);
     }
 
     private void fillConversationScroll(){

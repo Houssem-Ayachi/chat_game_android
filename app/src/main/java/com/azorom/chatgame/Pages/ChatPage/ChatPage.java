@@ -125,6 +125,7 @@ public class ChatPage extends AppCompatActivity {
             return;
         }
         wsc.sendMessage(createdMsg);
+
     }
 
     private void getChatMessages(){

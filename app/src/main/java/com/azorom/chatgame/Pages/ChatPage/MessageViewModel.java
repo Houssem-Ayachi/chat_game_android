@@ -62,6 +62,7 @@ public class MessageViewModel extends ViewModel {
         CreateMsgObj message = new CreateMsgObj(this.chatId, content.getValue(), sticker.getValue());
         if(this.sendMessageListener != null){
             this.sendMessageListener.sendMessage(message);
+            this.sticker.setValue("");
         }
     }
 }
