@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.azorom.chatgame.Pages.ChatPage.Fragments.SendMessageFragment;
 import com.azorom.chatgame.Pages.ChatPage.Fragments.StickersPickerFragment;
@@ -79,6 +80,11 @@ public class ChatPage extends AppCompatActivity {
         public void onSocketConnectionError() {
 
         }
+
+        @Override
+        public void onLevelUp() {
+            ChatPage.this.runOnUiThread(() -> displayMessage("YOU LEVELED UP!!"));
+        }
     };
 
     @Override
@@ -120,18 +126,16 @@ public class ChatPage extends AppCompatActivity {
 
     private void sendMessage(CreateMsgObj createdMsg){
         if(Objects.equals(createdMsg.message, "") && Objects.equals(createdMsg.sticker, "")){
-            Log.d("DEBUG", "both fields empty");
-            //TODO: idk send a notifcation or some thing to aler user;
+            displayMessage("type a message or send a sticker");
             return;
         }
         wsc.sendMessage(createdMsg);
-
     }
 
     private void getChatMessages(){
         RequestResponse<ChatMessage[], HttpRequestError> resp = chatRequestsHandler.getChatMessages(chatId);
         if(resp.error != null){
-            //TODO: handle error here pls
+            displayMessage(resp.error.message);
             return;
         }
         if(resp.response != null){
@@ -152,7 +156,7 @@ public class ChatPage extends AppCompatActivity {
         Intent i = this.getIntent();
         String chatId = i.getStringExtra("chatId");
         if(chatId == null){
-            Log.d("DEBUG", "chatId: is null bby");
+            displayMessage("couldn't load chat page (missing chatId)");
             Intent home = new Intent(this.getApplicationContext(), HomePage.class);
             startActivity(home);
             this.finish();
@@ -170,4 +174,9 @@ public class ChatPage extends AppCompatActivity {
         super.onRestart();
         wsc.setListener(wse);
     }
+
+    private void displayMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.azorom.chatgame.Pages.HomePage.HomePage;
 import com.azorom.chatgame.Requests.Auth.Auth;
@@ -15,6 +16,8 @@ import com.azorom.chatgame.Requests.Auth.LoginOBJ;
 import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Storage.Storage;
+
+//TODO: add email regex
 
 public class Login extends AppCompatActivity {
     Auth authHandler;
@@ -43,11 +46,11 @@ public class Login extends AppCompatActivity {
         String userName = userNameInput.getText().toString();
         String password = passwordInput.getText().toString();
         if(userName.equals("")){
-            //Not allowed
+            displayError("user name field empty");
             return;
         }
         if(password.equals("")){
-            //Not allowed
+            displayError("password field empty");
             return;
         }
         LoginOBJ loginObj = new LoginOBJ(userName, password);
@@ -59,6 +62,12 @@ public class Login extends AppCompatActivity {
             this.finish();
         }else if(resp.error != null){
             Log.d("DEBUG", "error: " + resp.error.message);
+            displayError(resp.error.message);
         }
     }
+
+    private void displayError(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

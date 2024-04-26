@@ -41,14 +41,19 @@ public class ActiveChatsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ChatRow chat = chatRows[i];
         view = inflater.inflate(R.layout.conversation_row, null);
+
         ImageView hat = view.findViewById(R.id.convRowHat);
         hat.setImageResource(DrawableSets.hats.get(chat.user.character.hat));
+
         ImageView head = view.findViewById(R.id.convRowHead);
         head.setImageResource(DrawableSets.heads.get(chat.user.character.head));
+
         TextView userNameLabel = view.findViewById(R.id.userNameLabel);
         userNameLabel.setText(chat.user.userName);
+
         TextView lastMessage = view.findViewById(R.id.lastMessage);
         lastMessage.setText(chat.lastMessage.content);
+
         return view;
     }
 }

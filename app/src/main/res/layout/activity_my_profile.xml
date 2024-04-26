@@ -9,16 +9,29 @@
     >
 
     <TextView
+        android:id="@+id/levelLabel"
+        android:layout_width="94dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="404dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/userNameLabel"
         android:layout_width="227dp"
         android:layout_height="51dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.902"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.537" />
 
     <TextView
         android:id="@+id/bioLabel"
@@ -54,7 +67,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintVertical_bias="0.696" />
 
     <Button
         android:id="@+id/EditProfile"
@@ -75,17 +88,17 @@
         app:layout_constraintVertical_bias="0.833" />
 
     <TextView
-        android:id="@+id/number"
-        android:layout_width="33dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
+        android:id="@+id/points"
+        android:layout_width="51dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
         android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/number"
+        app:layout_constraintTop_toTopOf="@+id/points"
         app:layout_constraintVertical_bias="0.979"
         app:srcCompat="@drawable/store" />
 
@@ -134,9 +147,9 @@
         android:id="@+id/profileHat"
         android:layout_width="82dp"
         android:layout_height="68dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="228dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hat1" />
@@ -145,10 +158,11 @@
         android:id="@+id/profileHead"
         android:layout_width="104dp"
         android:layout_height="82dp"
+        android:layout_marginTop="288dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileHat"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/head1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

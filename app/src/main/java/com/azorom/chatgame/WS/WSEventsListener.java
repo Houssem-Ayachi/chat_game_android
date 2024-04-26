@@ -15,4 +15,5 @@ public interface WSEventsListener {
     void onSocketConnected();
     void onSocketDisconnected();
     void onSocketConnectionError();
+    void onLevelUp();
 }

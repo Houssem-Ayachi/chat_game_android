@@ -61,16 +61,27 @@ public class MyProfile extends AppCompatActivity {
     private void populateProfileFields(UserProfileResp profileInfo){
         ImageView hatImg = findViewById(R.id.profileHat);
         hatImg.setImageResource(DrawableSets.hats.get(profileInfo.character.hat));
+
         ImageView headImg = findViewById(R.id.profileHead);
         headImg.setImageResource(DrawableSets.heads.get(profileInfo.character.head));
+
         TextView userNameLabel = findViewById(R.id.userNameLabel);
         userNameLabel.setText(profileInfo.userName);
+
         TextView bio = findViewById(R.id.bioLabel);
         bio.setText(profileInfo.bio);
+
         TextView email = findViewById(R.id.emailLabel);
         email.setText(profileInfo.email);
-        TextView funFacts = findViewById(R.id.bioLabel);
-        funFacts.setText(Arrays.toString(profileInfo.funFacts));
-    }
 
+        TextView funFacts = findViewById(R.id.funfactLabel);
+        funFacts.setText(profileInfo.funFacts[0]);
+
+        TextView levelLabel = findViewById(R.id.levelLabel);
+        levelLabel.setText("Level: " + String.valueOf(profileInfo.level.rank));
+
+        TextView points = findViewById(R.id.points);
+        points.setText(String.valueOf(profileInfo.points));
+
+    }
 }

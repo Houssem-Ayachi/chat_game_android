@@ -124,5 +124,12 @@ public class WSClient {
                 listener.onChatMessage(res);
             }
         });
+
+        socket.on(EventsToListenTo.LEVELED_UP, args -> {
+           if(listener != null){
+               listener.onLevelUp();
+           }
+        });
+
     }
 }

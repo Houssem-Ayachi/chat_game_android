@@ -24,7 +24,7 @@ import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.Chat.ChatRow;
 import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequests;
-import com.azorom.chatgame.SearchPage;
+import com.azorom.chatgame.Pages.SearchPage.SearchPage;
 import com.azorom.chatgame.Storage.Storage;
 import com.azorom.chatgame.WS.IncomingObjects.BasicError;
 import com.azorom.chatgame.WS.IncomingObjects.BasicResponse;
@@ -77,6 +77,11 @@ public class HomePage extends AppCompatActivity {
 
         @Override
         public void onSocketConnectionError() {
+
+        }
+
+        @Override
+        public void onLevelUp() {
 
         }
     };

@@ -1,24 +1,21 @@
-package com.azorom.chatgame;
+package com.azorom.chatgame.Pages.SearchPage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.azorom.chatgame.Pages.ChatPage.ChatPage;
+import com.azorom.chatgame.R;
 import com.azorom.chatgame.Requests.Constants.HttpRequestError;
 import com.azorom.chatgame.Requests.Constants.RequestResponse;
 import com.azorom.chatgame.Requests.User.AddFriendOBJ;
 import com.azorom.chatgame.Requests.User.ChatCreatedResponse;
 import com.azorom.chatgame.Requests.User.FilteredUser;
 import com.azorom.chatgame.Requests.User.UserRequests;
-import com.azorom.chatgame.Storage.DrawableSets;
 
 public class SearchPage extends AppCompatActivity {
 
@@ -50,7 +47,7 @@ public class SearchPage extends AppCompatActivity {
         if(!userName.equals("")){
             RequestResponse<FilteredUser[], HttpRequestError> resp = userReqHandler.searchUser(userName);
             if(resp.error != null){
-                Log.d("DEBUG", resp.error.message);
+                displayError(resp.error.message);
             }else if(resp.response != null){
                 fillUserRows(resp.response);
             }
@@ -60,31 +57,17 @@ public class SearchPage extends AppCompatActivity {
     }
 
     private void fillUserRows(FilteredUser[] users){
-        LinearLayout container = findViewById(R.id.SearchedUsersRows);
-        container.removeAllViews();
-        for(FilteredUser user: users){
-            View row = View.inflate(this, R.layout.searched_user_row, null);
-            TextView userNameLabel = row.findViewById(R.id.searchedUserNameLabel);
-            userNameLabel.setText(user.userName);
-            ImageView hat = row.findViewById(R.id.searchedUserHat);
-            hat.setImageResource(DrawableSets.hats.get(user.character.hat));
-            ImageView head = row.findViewById(R.id.searchedUserHead);
-            head.setImageResource(DrawableSets.heads.get(user.character.head));
-            row.setOnClickListener(v -> this.addFriend(user._id));
-            container.addView(row);
-        }
+        ListView container = findViewById(R.id.container);
+        SearchedUsersAdapter adapter = new SearchedUsersAdapter(this, users);
+        adapter.setOnSearchedUserClickListener(user -> addFriend(user._id));
+        container.setAdapter(adapter);
     }
 
     private void addFriend(String friendId){
-        RequestResponse<ChatCreatedResponse, HttpRequestError> resp =
-                this.userReqHandler.addFriend(new AddFriendOBJ(friendId));
+        RequestResponse<ChatCreatedResponse, HttpRequestError> resp = this.userReqHandler.addFriend(new AddFriendOBJ(friendId));
         if(resp.error != null){
             //both users might be friends
-            Log.d("DEBUG", resp.error.message);
-            if(resp.error.message.equals("already friends")){
-                //get their chat id and send user to it;
-                Log.d("DEBUG", "already friends");
-            }
+            displayError(resp.error.message);
         }else if(resp.response != null){
             //after adding both users to each other's frinds list
             //get their newly created chat's id to send current user to the chat page
@@ -98,4 +81,9 @@ public class SearchPage extends AppCompatActivity {
         startActivity(i);
         this.finish();
     }
+
+    private void displayError(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

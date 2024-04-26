@@ -22,4 +22,10 @@ public class UserProfileResp {
     @JsonProperty("funFacts")
     public String[] funFacts;
 
+    @JsonProperty("level")
+    public Level level;
+
+    @JsonProperty("points")
+    public int points;
+
 }

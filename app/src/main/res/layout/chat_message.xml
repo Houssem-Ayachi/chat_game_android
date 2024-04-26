@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/chatMsgStickerHat"
-        android:layout_width="45dp"
-        android:layout_height="37dp"
+        android:layout_width="44dp"
+        android:layout_height="38dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hat1" />
@@ -22,7 +22,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="44dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/chatMsgStickerHat"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/head1" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="28dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/chatMsgStickerHead"
         app:layout_constraintTop_toTopOf="parent" />

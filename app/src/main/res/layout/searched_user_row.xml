@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/searchedUserHat"
-        android:layout_width="41dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="27dp"
+        android:layout_height="14dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:scaleX="3"
         android:scaleY="3"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,23 +19,24 @@
 
     <ImageView
         android:id="@+id/searchedUserHead"
-        android:layout_width="48dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="19dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="52dp"
         android:scaleX="3"
         android:scaleY="3"
-        app:layout_constraintStart_toStartOf="@+id/searchedUserHat"
-        app:layout_constraintTop_toBottomOf="@+id/searchedUserHat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/head1" />
 
     <TextView
         android:id="@+id/searchedUserNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="28dp"
         android:text="userName"
-        app:layout_constraintStart_toEndOf="@+id/searchedUserHat"
-        app:layout_constraintTop_toTopOf="@+id/searchedUserHat" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

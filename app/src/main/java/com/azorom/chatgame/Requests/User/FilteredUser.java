@@ -9,4 +9,14 @@ public class FilteredUser {
     public String userName;
     @JsonProperty("character")
     public Character character;
+
+    @JsonProperty("currentXp")
+    public int currentXp;
+
+    @JsonProperty("points")
+    public int points;
+
+    @JsonProperty("level")
+    public String level;
+
 }

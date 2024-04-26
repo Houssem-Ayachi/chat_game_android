@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.azorom.chatgame.Requests.Constants.BasicRequestResponse;
 import com.azorom.chatgame.Requests.Constants.HttpRequestError;
@@ -15,8 +16,8 @@ import com.azorom.chatgame.Requests.User.UserRequests;
 import com.azorom.chatgame.Storage.DrawableSets;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+//TODO: add email regex
 
 public class CharacterCustomization extends AppCompatActivity {
 
@@ -91,11 +92,16 @@ public class CharacterCustomization extends AppCompatActivity {
     private void confirmSet(){
         RequestResponse<BasicRequestResponse, HttpRequestError> resp =
                 this.userReqHandler.updateCharacter(this.characterObj);
-        //TODO: handle errors
-
+        if(resp.error != null){
+            displayError(resp.error.message);
+            return;
+        }
         Intent intent= new Intent(CharacterCustomization.this, EditProfile.class);
         startActivity(intent);
         this.finish();
     }
 
+    private void displayError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

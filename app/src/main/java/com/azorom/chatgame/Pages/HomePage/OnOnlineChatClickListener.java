@@ -4,6 +4,6 @@ import com.azorom.chatgame.Requests.Chat.OnlineChat;
 
 public interface OnOnlineChatClickListener {
 
-    public void OnClick(OnlineChat chat);
+    void OnClick(OnlineChat chat);
 
 }
