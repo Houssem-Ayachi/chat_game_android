@@ -51,12 +51,12 @@ public class EditProfile extends AppCompatActivity {
             displayError("user name field empty");
             return;
         }
-        if(funfact.equals("")){
-            displayError("fun facts field empty");
-            return;
-        }
         if(bio.equals("")){
             displayError("bio field empty");
+            return;
+        }
+        if(funfact.equals("")){
+            displayError("fun facts field empty");
             return;
         }
         RequestResponse<BasicRequestResponse, HttpRequestError> resp = userRequests.editProfile(new EditProfileOBJ(username, bio, new String[] {funfact}));
