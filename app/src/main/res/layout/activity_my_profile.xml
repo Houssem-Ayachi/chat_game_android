@@ -117,19 +117,6 @@
         app:srcCompat="@drawable/store" />
 
     <ImageButton
-        android:id="@+id/precedent"
-        android:layout_width="134dp"
-        android:layout_height="121dp"
-        android:layout_marginBottom="848dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="prec"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/prec" />
-
-    <ImageButton
         android:id="@+id/Home"
         android:layout_width="81dp"
         android:layout_height="115dp"
@@ -164,5 +151,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/head1" />
+
+    <ImageButton
+        android:id="@+id/logoutdoor"
+        android:layout_width="82dp"
+        android:layout_height="88dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="rrr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/logoutdoor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

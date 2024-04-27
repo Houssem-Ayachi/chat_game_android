@@ -19,7 +19,7 @@ public abstract class RequestsConstants {
     static OkHttpClient _client = new OkHttpClient();
     static Storage storage = new Storage();
 
-    public static final String serverHost = "http://192.168.1.17:3000";
+    public static final String serverHost = "http://192.168.100.13:3000";
 
     private static String executeRequest(OkHttpClient client, Request req){
         String resJSON = "";

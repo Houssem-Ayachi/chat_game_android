@@ -8,15 +8,6 @@
     android:background="@drawable/bg"
     >
 
-    <Button
-        android:id="@+id/chatSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="settings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <GridView
         android:id="@+id/messagesContainer"
         android:layout_width="409dp"
@@ -32,4 +23,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/chatSettings"
+        android:layout_width="106dp"
+        android:layout_height="79dp"
+        android:layout_marginBottom="644dp"
+        android:backgroundTint="#02FFFFFF"
+        android:contentDescription="ss"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/settings" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

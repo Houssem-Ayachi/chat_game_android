@@ -47,6 +47,11 @@ public class MyProfile extends AppCompatActivity {
             Intent intent4 = new Intent(MyProfile.this, HomePage.class);
             startActivity(intent4);
         });
+        ImageButton d = findViewById(R.id.logoutdoor);
+        s.setOnClickListener(v -> {
+            Intent intent5 = new Intent(MyProfile.this, Login.class);
+            startActivity(intent5);
+        });
     }
 
     private void setProfile(){

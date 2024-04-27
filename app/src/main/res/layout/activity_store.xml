@@ -7,16 +7,249 @@
     android:background="@drawable/itemsstore"
     tools:context=".Store">
 
-    <ImageButton
-        android:id="@+id/prec"
-        android:layout_width="99dp"
-        android:layout_height="131dp"
-        android:layout_marginBottom="820dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="return to my profile"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="127dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="276dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/tripleheart" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="105dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="288dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/waterlemonheart" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="93dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="288dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/smileyy" />
+
+    <ImageView
+        android:id="@+id/coffee"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="444dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/coffee" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="120dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="444dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sunsmile" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="119dp"
+        android:layout_height="121dp"
+        android:layout_marginTop="444dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pizza" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="133dp"
+        android:layout_height="114dp"
+        android:layout_marginBottom="156dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/prec" />
+        app:srcCompat="@drawable/moon" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="110dp"
+        android:layout_height="113dp"
+        android:layout_marginBottom="168dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/star" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="130dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="160dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.982"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/clover" />
+
+    <Button
+        android:id="@+id/price1"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:layout_width="120dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="368dp"
+
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:text="100"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#000000" />
+
+    <Button
+        android:id="@+id/price2"
+        android:layout_width="118dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="372dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:text="100"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/price3"
+        android:layout_width="121dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="372dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:text="100"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/price4"
+        android:layout_width="117dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="552dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:text="200"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.031"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/price5"
+        android:layout_width="129dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="552dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:text="300"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/price6"
+        android:layout_width="125dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="552dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:text="300"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/price7"
+        android:layout_width="134dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="124dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:text="350"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/price8"
+        android:layout_width="141dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="128dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:text="350"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/price9"
+        android:layout_width="115dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="128dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:text="400"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
